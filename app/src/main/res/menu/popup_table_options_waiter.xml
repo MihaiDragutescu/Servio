@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tableNumber"
+        android:title="@string/table_label" />
+
+    <item
+        android:id="@+id/addOrder"
+        android:icon="@drawable/ic_add_24dp"
+        android:title="@string/add_order_label" />
+
+    <item
+        android:id="@+id/cancelOrder"
+        android:icon="@drawable/ic_remove_circle_outline_black_24dp"
+        android:title="@string/cancel_order_label" />
+
+    <item
+        android:id="@+id/editOrder"
+        android:icon="@drawable/ic_edit_black"
+        android:title="@string/edit_order_label" />
+
+</menu>

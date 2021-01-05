@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkgr_animation"
+    tools:context=".activities.NewDishActivity">
+
+    <TextView
+        android:id="@+id/addDishTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/activity_new_dish_title"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bottomBorderAddDish"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/whiteColor"
+        app:layout_constraintTop_toBottomOf="@+id/addDishTxtView" />
+
+    <TextView
+        android:id="@+id/fullNameTxtViewAddDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/dish_name_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/fullNameEditTxtAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomBorderAddDish" />
+
+    <EditText
+        android:id="@+id/fullNameEditTxtAddDish"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_dish"
+        android:drawablePadding="10dp"
+        android:hint="@string/dish_name_hint"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/ingredientsTxtViewAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullNameTxtViewAddDish"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/ingredientsTxtViewAddDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/dish_ingredients_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/ingredientsEditTxtAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullNameEditTxtAddDish" />
+
+    <EditText
+        android:id="@+id/ingredientsEditTxtAddDish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_list_black_24dp"
+        android:drawablePadding="10dp"
+        android:hint="@string/dish_ingredients_hint"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/weightTxtViewAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredientsTxtViewAddDish"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/weightTxtViewAddDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/dish_weight_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/weightEditTextAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredientsEditTxtAddDish" />
+
+    <EditText
+        android:id="@+id/weightEditTextAddDish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_add_24dp"
+        android:drawablePadding="10dp"
+        android:hint="@string/dish_weight_hint"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/priceTxtViewAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightTxtViewAddDish"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/priceTxtViewAddDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/dish_price_hint"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/priceEditTextAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightEditTextAddDish" />
+
+    <EditText
+        android:id="@+id/priceEditTextAddDish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_money"
+        android:drawablePadding="10dp"
+        android:hint="@string/dish_price_hint"
+        android:inputType="numberDecimal"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/categoryTxtViewAddDish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceTxtViewAddDish"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/categoryTxtViewAddDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/dish_category_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@id/dishCategorySpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceEditTextAddDish" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/dishCategorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="15sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryTxtViewAddDish" />
+
+    <Button
+        android:id="@+id/backBtnAddDish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/back_label"
+        android:textColor="@color/whiteColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishCategorySpinner" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/addDishBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/add_dish_button_text"
+        android:textColor="@color/whiteColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/dishCategorySpinner" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

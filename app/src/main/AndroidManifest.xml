@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.servio">
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name="com.servio.activities.PrepareOrdersActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name="com.servio.activities.DishInfoDialogActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.NewWallActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.NewWallActivity2"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.NewTableActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.TableInfoActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.EditTableInfoActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.servio.activities.TakeOrdersActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name="com.servio.activities.LogInActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.ChefUIActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.WaiterUiActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.DishInfoActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.NewDishActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.MenuActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.EditDishActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.HallActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name="com.servio.activities.EmployeeInfoActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.EditEmployeeActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.NewEmployeeActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.EmployeesListActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.AdminUIActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name="com.servio.activities.LoadingActivity"
+            android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

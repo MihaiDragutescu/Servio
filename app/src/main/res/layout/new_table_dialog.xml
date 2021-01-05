@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableInfoDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="400dp"
+    android:background="@drawable/bkgr_animation"
+    tools:context=".activities.NewTableActivity">
+
+    <TextView
+        android:id="@+id/titleTxtViewTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/activity_table_info_title"
+        android:textColor="@color/whiteColor"
+        android:textSize="16sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/whiteColor"
+        app:layout_constraintTop_toBottomOf="@+id/titleTxtViewTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTableNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/table_number_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="16sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <EditText
+        android:id="@+id/editTextTableNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/simple_edit_text"
+        android:hint="@string/menu_edit_text_quantity"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="16sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/textViewTableNumberOfSeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/table_number_of_seats_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="16sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumber" />
+
+    <EditText
+        android:id="@+id/editTextTableNumberOfSeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/simple_edit_text"
+        android:hint="@string/menu_edit_text_quantity"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="16sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumber"
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/saveData"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="4dp"
+        android:padding="2dp"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/save_button_text"
+        android:textColor="@color/whiteColor"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumberOfSeats"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tableNumber"
+        android:title="@string/table_label" />
+
+    <item
+        android:id="@+id/tableInfo"
+        android:icon="@drawable/ic_info_outline_black"
+        android:title="@string/activity_table_info_title" />
+
+    <item
+        android:id="@+id/tableEditInfo"
+        android:icon="@drawable/ic_edit_black"
+        android:title="@string/edit_table_info_label" />
+
+    <item
+        android:id="@+id/deleteTable"
+        android:icon="@drawable/ic_remove_circle_outline_black_24dp"
+        android:title="@string/delete_table_label" />
+
+</menu>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkgr_animation"
+    tools:context=".activities.NewEmployeeActivity">
+
+    <TextView
+        android:id="@+id/addEmpTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/activity_new_employee_title"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bottomBorderAddEmp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/whiteColor"
+        app:layout_constraintTop_toBottomOf="@+id/addEmpTxtView" />
+
+    <TextView
+        android:id="@+id/fullNameTxtViewAddEmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/employee_name_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/fullNameEditTxtAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomBorderAddEmp" />
+
+    <EditText
+        android:id="@+id/fullNameEditTxtAddEmp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_person_white"
+        android:drawablePadding="10dp"
+        android:hint="@string/username_hint"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/emailTxtViewAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullNameTxtViewAddEmp"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/emailTxtViewAddEmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/email_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/mailEditTxtAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullNameEditTxtAddEmp" />
+
+    <EditText
+        android:id="@+id/mailEditTxtAddEmp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_mail"
+        android:drawablePadding="10dp"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/passwordTxtViewAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailTxtViewAddEmp"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/passwordTxtViewAddEmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/password_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEditTextAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mailEditTxtAddEmp" />
+
+    <EditText
+        android:id="@+id/passwordEditTextAddEmp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="10dp"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/jobTxtViewAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTxtViewAddEmp"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/jobTxtViewAddEmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/job_label"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@+id/jobSpinnerAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextAddEmp" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/jobSpinnerAddEmp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jobTxtViewAddEmp" />
+
+    <Button
+        android:id="@+id/addEmployeeBtnAddEmp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/add_employee_button_text"
+        android:textColor="@color/whiteColor"
+        app:layout_constraintBottom_toTopOf="@+id/backBtnAddEmp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/backBtnAddEmp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/back_label"
+        android:textColor="@color/whiteColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

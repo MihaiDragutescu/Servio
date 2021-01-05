@@ -1,0 +1,4 @@
+<resources>
+    <integer name="stroke_width">6</integer>
+    <integer name="heart_animation_duration">300</integer>
+</resources>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/display"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkgr_animation"
+    android:baselineAligned="false"
+    android:weightSum="4"
+    tools:context=".activities.HallActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/optionsLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="2dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/hallNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:fontFamily="@string/font_family_1"
+            app:layout_constraintBottom_toTopOf="@+id/bottomBorderHall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/helpImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_help"
+            app:layout_constraintBottom_toTopOf="@+id/bottomBorderHall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/bottomBorderHall"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/whiteColor"
+            app:layout_constraintTop_toBottomOf="@+id/hallNameTextView" />
+
+        <TextView
+            android:id="@+id/verticalBorderHall"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/whiteColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gridLayoutElements"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayoutElements"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/custom_border"
+            app:columnCount="2"
+            app:layout_constraintBottom_toTopOf="@+id/addHallButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottomBorderHall"
+            app:rowCount="3">
+
+            <ImageView
+                android:id="@+id/tableImageView"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:src="@drawable/ic_launcher_foreground_masa"
+                app:layout_columnWeight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/kitchenImageView"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground_bucatarie"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/toiletImageView"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground_toaleta"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/barImageView"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground_bar"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/wallImageView"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground_perete_2"
+                tools:ignore="ContentDescription" />
+
+
+            <ImageView
+                android:id="@+id/wallImageView2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:onClick="imageClicked"
+                android:adjustViewBounds="true"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/ic_launcher_foreground_perete_7"
+                tools:ignore="ContentDescription" />
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <Button
+            android:id="@+id/addHallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button_hall"
+            android:minWidth="8dp"
+            android:minHeight="24dp"
+            android:text="@string/add_hall_button_text"
+            android:textColor="@color/whiteColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/deleteHallButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/deleteHallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button_hall"
+            android:minWidth="8dp"
+            android:minHeight="24dp"
+            android:text="@string/delete_hall_button_text"
+            android:textColor="@color/whiteColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/swapHallButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/swapHallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button_hall"
+            android:minWidth="8dp"
+            android:minHeight="24dp"
+            android:text="@string/swap_hall_button_text"
+            android:textColor="@color/whiteColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/hallRelativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/display"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/noHalltextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:tag="noHalltextView"
+            android:text="@string/no_hall_label"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:visibility="invisible"
+            app:fontFamily="@string/font_family_1" />
+
+        <LinearLayout
+            android:id="@+id/selectHallLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:tag="selectHallLinearLayout"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_hall_label"
+                android:textColor="@android:color/white"
+                android:textSize="32sp"
+                app:fontFamily="@string/font_family_1" />
+
+            <TextView
+                android:id="@+id/borderRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/whiteColor" />
+
+            <RadioGroup
+                android:id="@+id/selectHallRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/confirmSelectedHallButton"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_button_hall"
+                android:text="@string/confirm_button_text"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="-75dp" />
+
+</LinearLayout>
