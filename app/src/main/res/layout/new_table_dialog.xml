@@ -29,16 +29,16 @@
         android:layout_height="2dp"
         android:layout_marginTop="4dp"
         android:background="@color/whiteColor"
-        app:layout_constraintTop_toBottomOf="@+id/titleTxtViewTable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTxtViewTable" />
 
     <TextView
         android:id="@+id/textViewTableNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/table_number_label"
         android:textColor="@color/whiteColor"
         android:textSize="16sp"
@@ -67,8 +67,8 @@
         android:id="@+id/textViewTableNumberOfSeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/table_number_of_seats_label"
         android:textColor="@color/whiteColor"
         android:textSize="16sp"
@@ -81,8 +81,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/simple_edit_text"
         android:hint="@string/menu_edit_text_quantity"
@@ -97,17 +97,17 @@
 
     <Button
         android:id="@+id/saveData"
-        android:layout_width="75dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="4dp"
-        android:padding="2dp"
         android:background="@drawable/rounded_button_1"
+        android:padding="4dp"
         android:text="@string/save_button_text"
         android:textColor="@color/whiteColor"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumberOfSeats"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumberOfSeats" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

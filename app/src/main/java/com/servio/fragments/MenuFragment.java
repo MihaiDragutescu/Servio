@@ -34,8 +34,7 @@ public class MenuFragment extends Fragment {
 
     private EditText searchView;
     private RecyclerView recyclerView;
-    private List<Dish> dishList;
-   // private Boolean closeFragment;
+    private List<Dish> dishList = new ArrayList<>();
 
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -62,41 +61,12 @@ public class MenuFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-
-       /* editText=view.findViewById(R.id.fragmentmenuedittext);
-        Button button=view.findViewById(R.id.fragmentmenubutton);
-
-        button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewModel.setText(editText.getText());
-                    }
-                }
-        );*/
-
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       /* SharedViewModel viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
-
-        viewModel.closeFragment.observe(getViewLifecycleOwner(),
-                new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-
-                    }
-                });*/
-
-       /* viewModel.text.observe(getViewLifecycleOwner(), new Observer<CharSequence>() {
-            @Override
-            public void onChanged(CharSequence charSequence) {
-                editText.setText(charSequence);
-            }
-        });*/
     }
 
     @Override
@@ -106,7 +76,6 @@ public class MenuFragment extends Fragment {
         searchView = view.findViewById(R.id.searchDishEditText);
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         recyclerView = view.findViewById(R.id.recyclerViewMenu);
-        // viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
         firebaseReference = FirebaseFirestore.getInstance();
         firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseReference, getContext());

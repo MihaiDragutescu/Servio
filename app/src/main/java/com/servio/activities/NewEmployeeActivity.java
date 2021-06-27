@@ -174,7 +174,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
                                     FirebaseUser currentFirebaseUser = firebaseAuthSecondary.getCurrentUser();
                                     employee.put("userID", currentFirebaseUser.getUid());
 
-                                    UserProfileChangeRequest profileRequest =new UserProfileChangeRequest.Builder().setDisplayName(lastName+" "+firstName).build();
+                                    UserProfileChangeRequest profileRequest = new UserProfileChangeRequest.Builder().setDisplayName(lastName + " " + firstName).build();
 
                                     currentFirebaseUser.updateProfile(profileRequest).addOnFailureListener(
                                             new OnFailureListener() {

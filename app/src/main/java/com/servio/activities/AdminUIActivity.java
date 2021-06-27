@@ -31,7 +31,6 @@ public class AdminUIActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startAnimation();
         initViews();
         setOnClickListeners();
     }
@@ -81,15 +80,6 @@ public class AdminUIActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    private void startAnimation() {
-        LinearLayout linearLayout = findViewById(R.id.mainMenuLayout);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 
     @Override

@@ -13,17 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.servio.R;
 
 class DishWaiterViewHolder extends RecyclerView.ViewHolder {
-    private ConstraintLayout constraintLayout;
+    private final ConstraintLayout constraintLayout;
 
-    private TextView dishName;
-    private TextView dishCategory;
+    private final TextView dishName;
+    private final TextView dishCategory;
 
-    private EditText dishQuantity;
-    private ImageButton buttonAdd;
+    private final EditText dishQuantity;
+    private final ImageButton buttonAdd;
 
     DishWaiterViewHolder(@NonNull View itemView) {
         super(itemView);
-        constraintLayout =itemView.findViewById(R.id.constraintLayout);
+        constraintLayout = itemView.findViewById(R.id.constraintLayout);
 
         dishName = itemView.findViewById(R.id.dishNameTxtViewRecyclerView);
         dishCategory = itemView.findViewById(R.id.categoryTxtViewMenu);
@@ -33,19 +33,10 @@ class DishWaiterViewHolder extends RecyclerView.ViewHolder {
         buttonAdd = itemView.findViewById(R.id.addBtnRecyclerView);
     }
 
-    void setDishName(String name) {
-        dishName.setText(name);
+    TextView getDishName() {
+        return dishName;
     }
 
-    void setDishCategory(String category) {
-        dishCategory.setText(category);
-    }
-
-   /* void setDishQuantity(String quantity) {
-        dishQuantity.setText(quantity);
-    }*/
-
-   TextView getDishName(){return dishName;}
     EditText getDishQuantity() {
         return dishQuantity;
     }
@@ -54,7 +45,11 @@ class DishWaiterViewHolder extends RecyclerView.ViewHolder {
         return buttonAdd;
     }
 
-    TextView getDishCategory(){return dishCategory;}
+    TextView getDishCategory() {
+        return dishCategory;
+    }
 
-    ConstraintLayout getCardView(){return constraintLayout;}
+    ConstraintLayout getCardView() {
+        return constraintLayout;
+    }
 }

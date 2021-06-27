@@ -15,12 +15,12 @@ import com.servio.R;
  */
 class EmployeeViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView employeeName;
-    private TextView employeeType;
+    private final TextView employeeName;
+    private final TextView employeeType;
 
-    private ImageButton buttonEdit;
-    private ImageButton buttonRemove;
-    private ImageButton buttonInfo;
+    private final ImageButton buttonEdit;
+    private final ImageButton buttonRemove;
+    private final ImageButton buttonInfo;
 
     EmployeeViewHolder(@NonNull View itemView) {
         super(itemView);

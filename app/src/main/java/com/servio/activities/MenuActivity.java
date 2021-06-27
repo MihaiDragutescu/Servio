@@ -51,7 +51,6 @@ public class MenuActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startAnimation();
         initViews();
         setLayoutManager();
 
@@ -112,7 +111,6 @@ public class MenuActivity extends AppCompatActivity {
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                                 if (document.exists()) {
-                                                    Toast.makeText(MenuActivity.this, "S-a gasit elementul", Toast.LENGTH_SHORT).show();
                                                     valid = 1;
                                                 }
                                             }
@@ -156,15 +154,6 @@ public class MenuActivity extends AppCompatActivity {
         editTextSearchDish = findViewById(R.id.searchDishEditText);
         editTextSearchDish.setImeOptions(EditorInfo.IME_ACTION_DONE);
         imageButtonSearchDish = findViewById(R.id.imageButtonSearchDish);
-    }
-
-    private void startAnimation() {
-        ConstraintLayout constraintLayout = findViewById(R.id.constrLayoutMenu);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 
     private void setLayoutManager() {

@@ -10,18 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.servio.R;
 
 class ActiveOrdersViewHolder extends RecyclerView.ViewHolder {
-    private ConstraintLayout constraintLayout;
+    private final ConstraintLayout constraintLayout;
 
-    private TextView orderName;
+    private final TextView orderName;
 
     ActiveOrdersViewHolder(@NonNull View itemView) {
         super(itemView);
         constraintLayout =itemView.findViewById(R.id.constraintLayout);
         orderName = itemView.findViewById(R.id.orderNameRecyclerView);
-    }
-
-    void setOrderName(String name) {
-        orderName.setText(name);
     }
 
     TextView getOrderName(){return orderName;}

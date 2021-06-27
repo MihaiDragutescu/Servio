@@ -22,8 +22,8 @@
             android:textColor="@color/whiteColor"
             android:textSize="24sp"
             app:fontFamily="@string/font_family_1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/editBtnRecyclerView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

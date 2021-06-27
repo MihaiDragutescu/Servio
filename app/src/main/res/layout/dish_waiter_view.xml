@@ -17,10 +17,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/whiteColor"
             android:textSize="20sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:fontFamily="@string/font_family_1"
             app:layout_constraintEnd_toStartOf="@+id/quantityEditTextRecyclerView"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,15 +47,15 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
-            android:textColor="@color/whiteColor"
-            app:fontFamily="@string/font_family_1"
-            android:textSize="20sp"
-            android:textAlignment="center"
             android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/whiteColor"
+            android:textSize="20sp"
+            app:fontFamily="@string/font_family_1"
+            app:layout_constraintBottom_toTopOf="@id/view"
             app:layout_constraintEnd_toStartOf="@id/addBtnRecyclerView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,LabelFor" />
 
         <ImageButton
             android:id="@+id/addBtnRecyclerView"
@@ -70,7 +70,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
-
 
 
         <View

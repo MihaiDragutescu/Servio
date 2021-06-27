@@ -43,7 +43,7 @@ public class EmployeesListActivity extends AppCompatActivity {
     private ImageButton imageButtonSearchEmployee;
 
     private Context context;
-    private FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private EmployeeAdapter employeeAdapter;
 
     @Override
@@ -53,7 +53,6 @@ public class EmployeesListActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startAnimation();
         initViews();
         setLayoutManager();
 
@@ -157,15 +156,6 @@ public class EmployeesListActivity extends AppCompatActivity {
         editTextSearchEmployee = findViewById(R.id.searchEmployeeEditText);
         editTextSearchEmployee.setImeOptions(EditorInfo.IME_ACTION_DONE);
         imageButtonSearchEmployee = findViewById(R.id.imageButtonSearchEmployee);
-    }
-
-    private void startAnimation() {
-        ConstraintLayout constraintLayout = findViewById(R.id.constrLayoutEmpList);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 
     private void setLayoutManager() {

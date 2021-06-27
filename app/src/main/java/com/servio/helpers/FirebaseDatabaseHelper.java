@@ -27,8 +27,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class FirebaseDatabaseHelper {
-    private FirebaseFirestore firebaseFirestoreReference;
-    private Context context;
+    private final FirebaseFirestore firebaseFirestoreReference;
+    private final Context context;
 
     public FirebaseDatabaseHelper(FirebaseFirestore firebaseFirestoreReference, Context context) {
         this.firebaseFirestoreReference = firebaseFirestoreReference;
@@ -127,7 +127,6 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    //https://stackoverflow.com/questions/42128909/return-value-from-valueeventlistener-java
     public void checkEmptyCollection(String collectionPath, final SimpleCallback<Boolean> finishedCallback) {
         CollectionReference collectionReference = firebaseFirestoreReference.collection(collectionPath);
         collectionReference.get().addOnCompleteListener(
@@ -167,8 +166,8 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getOrdersData(String fieldToFilter,String fieldToFilterValue, final SimpleCallback<List<Order>> finishedCallback) {
-        firebaseFirestoreReference.collection("Orders").whereEqualTo(fieldToFilter,fieldToFilterValue).get().addOnCompleteListener(
+    public void getOrdersData(String fieldToFilter, String fieldToFilterValue, final SimpleCallback<List<Order>> finishedCallback) {
+        firebaseFirestoreReference.collection("Orders").whereEqualTo(fieldToFilter, fieldToFilterValue).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -325,7 +324,7 @@ public class FirebaseDatabaseHelper {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             int count = 0;
-                            for (DocumentSnapshot document : task.getResult()) {
+                            for (DocumentSnapshot ignored : task.getResult()) {
                                 count++;
                             }
                             finishedCallback.callback(count);

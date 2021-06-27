@@ -37,8 +37,8 @@ public class NewTableActivity extends Activity {
                         if (tableNumber.getText().toString().trim().isEmpty() || tableNumberOfSeats.getText().toString().trim().isEmpty()) {
                             Toast.makeText(NewTableActivity.this, "Completati campurile cu informatii", Toast.LENGTH_SHORT).show();
                         } else {
-                            int tableNumberValue = Integer.valueOf(tableNumber.getText().toString().trim());
-                            int tableNumberOfSeatsValue = Integer.valueOf(tableNumberOfSeats.getText().toString().trim());
+                            int tableNumberValue = Integer.parseInt(tableNumber.getText().toString().trim());
+                            int tableNumberOfSeatsValue = Integer.parseInt(tableNumberOfSeats.getText().toString().trim());
 
                             Intent intent = new Intent();
                             intent.putExtra("tableNumber", tableNumberValue);
@@ -60,8 +60,8 @@ public class NewTableActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = 400;
-        params.height = 400;
+        params.width = 550;
+        params.height = 550;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

@@ -103,7 +103,7 @@ public class NewDishActivity extends AppCompatActivity {
                             dish.put("dishIngredients", ingredients);
                             dish.put("dishWeight", Double.valueOf(weight));
                             dish.put("dishPrice", Double.valueOf(price));
-                            dish.put("dishQuantity",quantity);
+                            dish.put("dishQuantity", quantity);
                             dish.put("dishId", id);
                             dish.put("dishCategory", category);
 
@@ -123,7 +123,7 @@ public class NewDishActivity extends AppCompatActivity {
                             firebaseDatabaseHelper.insertData("Dishes", id, dish);
 
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(NewDishActivity.this, "Preparatul a fost inserat cu succes", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewDishActivity.this, "Preparatul a fost adaugat cu succes", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(NewDishActivity.this, MenuActivity.class));
                         }

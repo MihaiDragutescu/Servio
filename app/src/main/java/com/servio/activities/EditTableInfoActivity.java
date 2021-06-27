@@ -40,8 +40,8 @@ public class EditTableInfoActivity extends Activity {
                         if (tableNumber.getText().toString().trim().isEmpty() || tableNumberOfSeats.getText().toString().trim().isEmpty()) {
                             Toast.makeText(EditTableInfoActivity.this, "Completati campurile cu informatii", Toast.LENGTH_SHORT).show();
                         } else {
-                            tableNumberValue = Integer.valueOf(tableNumber.getText().toString().trim());
-                            tableNumberOfSeatsValue = Integer.valueOf(tableNumberOfSeats.getText().toString().trim());
+                            tableNumberValue = Integer.parseInt(tableNumber.getText().toString().trim());
+                            tableNumberOfSeatsValue = Integer.parseInt(tableNumberOfSeats.getText().toString().trim());
 
                             Intent intent = new Intent();
                             intent.putExtra("tableNumber", tableNumberValue);

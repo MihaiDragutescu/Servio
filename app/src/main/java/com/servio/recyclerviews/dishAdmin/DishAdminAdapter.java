@@ -22,7 +22,7 @@ import com.servio.models.Dish;
 import org.jetbrains.annotations.NotNull;
 
 public class DishAdminAdapter extends FirestoreRecyclerAdapter<Dish, DishAdminViewHolder> {
-    private Context context;
+    private final Context context;
 
     public DishAdminAdapter(@NonNull FirestoreRecyclerOptions<Dish> options, Context context) {
         super(options);

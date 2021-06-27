@@ -53,16 +53,6 @@ public class NewWallActivity2 extends Activity {
         );
     }
 
- /*   @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-            Intent intent = new Intent();
-            setResult(RESULT_CANCELED, intent);
-            finish();
-        }
-        return false;
-    }*/
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();

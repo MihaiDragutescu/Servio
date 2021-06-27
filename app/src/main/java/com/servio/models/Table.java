@@ -5,8 +5,6 @@ public class Table {
     private int tableNumber;
     private int tableNumberOfSeats;
     private boolean tableAvailability;
-    //private Order tableOrder;
-    //private Waiter tableAssignedWaiter;
 
     public Table() {
     }

@@ -13,7 +13,7 @@ import com.servio.models.Order;
 import java.util.List;
 
 public class ActiveOrdersAdapter extends RecyclerView.Adapter<ActiveOrdersViewHolder> {
-    private List<Order> activeOrdersList;
+    private final List<Order> activeOrdersList;
 
     public ActiveOrdersAdapter(List<Order> activeOrdersList) {
         this.activeOrdersList = activeOrdersList;

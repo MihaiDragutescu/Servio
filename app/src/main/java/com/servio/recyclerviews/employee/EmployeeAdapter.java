@@ -22,7 +22,7 @@ import com.servio.models.Employee;
 import org.jetbrains.annotations.NotNull;
 
 public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employee, EmployeeViewHolder> {
-    private Context context;
+    private final Context context;
 
     public EmployeeAdapter(@NonNull FirestoreRecyclerOptions<Employee> options, Context context) {
         super(options);

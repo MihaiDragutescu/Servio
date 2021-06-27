@@ -15,12 +15,12 @@ import com.servio.R;
  */
 class DishAdminViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView dishName;
-    private TextView dishCategory;
+    private final TextView dishName;
+    private final TextView dishCategory;
 
-    private ImageButton buttonEdit;
-    private ImageButton buttonRemove;
-    private ImageButton buttonInfo;
+    private final ImageButton buttonEdit;
+    private final ImageButton buttonRemove;
+    private final ImageButton buttonInfo;
 
     DishAdminViewHolder(@NonNull View itemView) {
         super(itemView);

@@ -1,7 +1,8 @@
 package com.servio.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.servio.R;
+import com.servio.activities.TakeOrdersActivity;
 import com.servio.helpers.FirebaseDatabaseHelper;
-import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Dish;
 import com.servio.recyclerviews.dishOrder.DishOrderAdapter;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,13 +41,14 @@ public class OrderFragment extends Fragment {
 
     private TextView emptyOrder;
     private RecyclerView recyclerView;
-    private List<Dish> dishList = new ArrayList<>();
+    private List<Dish> dishList;
 
-    //private Order order=new Order();
     private TextView orderPriceTextView;
     private Button saveButton;
 
+    DishOrderAdapter dishOrderAdapter;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
+    SharedViewModel viewModel;
 
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -56,7 +56,7 @@ public class OrderFragment extends Fragment {
     }
 
     private void setAdapter(List<Dish> dishList1) {
-        DishOrderAdapter dishOrderAdapter = new DishOrderAdapter(getContext(), dishList1);
+        dishOrderAdapter = new DishOrderAdapter(getContext(), dishList1);
         recyclerView.setAdapter(dishOrderAdapter);
     }
 
@@ -65,18 +65,10 @@ public class OrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
 
+        viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         emptyOrder = view.findViewById(R.id.emptyOrder);
-
-
-       /* button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewModel.setText(editText.getText());
-                    }
-                }
-        );*/
-
+        recyclerView = view.findViewById(R.id.recyclerViewMenu);
+        orderPriceTextView = view.findViewById(R.id.orderPrice);
 
         return view;
     }
@@ -92,134 +84,141 @@ public class OrderFragment extends Fragment {
         TextView titleTextView = view.findViewById(R.id.titleTxtView);
         Bundle bundle = getArguments();
 
+        dishList = new ArrayList<>();
+        viewModel.setDishList(dishList);
+
         if (bundle != null) {
             tableNumber = bundle.getInt("tableNumber");
             hallName = bundle.getString("hallName");
+            dishList = (List<Dish>) getArguments().getSerializable("dishList");
             titleTextView.setText("Comanda masa nr. " + tableNumber);
+
+            if (dishList == null || dishList.isEmpty()) {
+                dishList = new ArrayList<>();
+                viewModel.setDishList(dishList);
+                setLayoutManager();
+                setAdapter(dishList);
+                emptyOrder.setVisibility(View.VISIBLE);
+            } else {
+                emptyOrder.setVisibility(View.GONE);
+
+                viewModel.setDishList(dishList);
+                setLayoutManager();
+                setAdapter(dishList);
+            }
+
+        } else {
+            setLayoutManager();
+            setAdapter(dishList);
         }
 
-        recyclerView = view.findViewById(R.id.recyclerViewMenu);
-        orderPriceTextView = view.findViewById(R.id.orderPrice);
-        /*backButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final LinearLayout linearLayout = (LinearLayout) getActivity().getWindow().findViewById(R.id.fragmentsLinearLayout);
-                        final ConstraintLayout optionsLayout = (ConstraintLayout) getActivity().getWindow().findViewById(R.id.optionsLayout);
-                        final RelativeLayout hallRelativeLayout = (RelativeLayout) getActivity().getWindow().findViewById(R.id.hallRelativeLayout);
-                        linearLayout.setVisibility(View.GONE);
-                        optionsLayout.setVisibility(View.VISIBLE);
-                        hallRelativeLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-        );*/
-
         saveButton = view.findViewById(R.id.saveData);
-       /* saveButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                       *//* FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        Toast.makeText(getActivity(), user.getUid(), Toast.LENGTH_SHORT).show();
-
-                        Calendar calendar=Calendar.getInstance();
-                        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                        String formattedDate=simpleDateFormat.format(calendar.getTime());
-                        Toast.makeText(getActivity(), formattedDate, Toast.LENGTH_SHORT).show();*//*
-
-                        Toast.makeText(getActivity(), String.valueOf(order.getOrderPrice()), Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );*/
-
-        setLayoutManager();
-        setAdapter(dishList);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedViewModel viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
         viewModel.dishList.observe(getViewLifecycleOwner(),
                 new Observer<List<Dish>>() {
                     @Override
                     public void onChanged(final List<Dish> list) {
 
-                        if (list.size() > 0) {
-                            emptyOrder.setVisibility(View.GONE);
-                        } else {
+                        if (list.isEmpty() || list == null) {
                             emptyOrder.setVisibility(View.VISIBLE);
-                        }
+                        } else {
+                            emptyOrder.setVisibility(View.GONE);
 
-                        setAdapter(list);
+                            setAdapter(list);
 
-                        double sum = 0.0;
+                            double sum = 0.0;
 
-                        for (int i = 0; i < list.size(); i++) {
-                            sum += list.get(i).getDishPrice() * list.get(i).getDishQuantity();
-                        }
+                            for (int i = 0; i < list.size(); i++) {
+                                sum += list.get(i).getDishPrice() * list.get(i).getDishQuantity();
+                            }
 
-                        String priceLabel = "Pret: " + sum + " lei";
-                        orderPriceTextView.setText(priceLabel);
+                            String priceLabel = "Pret: " + sum + " lei";
+                            orderPriceTextView.setText(priceLabel);
 
-                        final double finalSum = sum;
-                        saveButton.setOnClickListener(
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if (list.size() == 0) {
-                                            Toast.makeText(getActivity(), "Nu au fost adaugate produse la comanda", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            String hallNameAux = hallName.replaceAll("\\s+", "");
-                                            final Map<String, Object> orderMap = new HashMap<>();
+                            final double finalSum = sum;
+                            saveButton.setOnClickListener(
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (list.size() == 0) {
+                                                Toast.makeText(getActivity(), "Nu au fost adaugate produse la comanda", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                android.app.AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                                                alertDialog.setTitle("Confirmare finalizare comandă");
+                                                alertDialog.setMessage("Doriți să finalizați comanda?");
 
-                                            String orderId = hallNameAux + "Masa" + tableNumber;
-                                            orderMap.put("orderId", orderId);
+                                                alertDialog.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        String hallNameAux = hallName.replaceAll("\\s+", "");
+                                                        final Map<String, Object> orderMap = new HashMap<>();
 
-                                            orderMap.put("orderedDishes", list);
+                                                        String orderId = hallNameAux + "Masa" + tableNumber;
+                                                        orderMap.put("orderId", orderId);
 
-                                            Calendar calendar = Calendar.getInstance();
-                                            @SuppressLint("SimpleDateFormat")
-                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                                            String formattedDate = simpleDateFormat.format(calendar.getTime());
-                                            orderMap.put("orderTime", formattedDate);
+                                                        orderMap.put("orderedDishes", list);
 
-                                            orderMap.put("orderName", "Comanda masa nr. " + tableNumber);
+                                                        Calendar calendar = Calendar.getInstance();
+                                                        @SuppressLint("SimpleDateFormat")
+                                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                                        String formattedDate = simpleDateFormat.format(calendar.getTime());
+                                                        orderMap.put("orderTime", formattedDate);
 
-                                            orderMap.put("hallName", hallName);
+                                                        orderMap.put("orderName", "Comanda masa nr. " + tableNumber);
 
-                                            orderMap.put("tableNumber", tableNumber);
+                                                        orderMap.put("hallName", hallName);
 
-                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                            orderMap.put("waiterName", user.getDisplayName());
+                                                        orderMap.put("tableNumber", tableNumber);
 
-                                            orderMap.put("orderPrice", finalSum);
+                                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                        orderMap.put("waiterName", user.getDisplayName());
 
-                                            orderMap.put("orderStatus", "waiting");
+                                                        orderMap.put("orderPrice", finalSum);
 
-                                            firebaseDatabaseHelper.insertData("Orders", orderId, orderMap);
-                                            Toast.makeText(getActivity(), "Comanda a fost finalizata cu succes.", Toast.LENGTH_SHORT).show();
+                                                        orderMap.put("orderStatus", "waiting");
 
-                                            String s= "salut";
-                                            simpleCallback.callback(s);
+                                                        firebaseDatabaseHelper.insertData("Orders", orderId, orderMap);
+                                                        firebaseDatabaseHelper.simpleUpdateField("Tables", hallNameAux + tableNumber, "tableAvailability", false);
+
+                                                        ((TakeOrdersActivity) getActivity()).saveOrder();
+                                                        dishList = new ArrayList<>();
+                                                        viewModel.setDishList(dishList);
+                                                        setLayoutManager();
+                                                        setAdapter(dishList);
+
+                                                        Toast.makeText(getActivity(), "Comanda a fost finalizată", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+
+                                                alertDialog.setNegativeButton("Anulează", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                                alertDialog.show();
+                                            }
                                         }
                                     }
-                                }
-                        );
+                            );
+                        }
                     }
                 });
 
     }
 
-    private SimpleCallback simpleCallback;
-    @Override
-    public void onAttach(@NotNull Activity activity) {
-        super.onAttach(activity);
-        try {
-            simpleCallback = (SimpleCallback) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
-        }
+    public void reset() {
+        viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        dishList = new ArrayList<>();
+        viewModel.setDishList(dishList);
+        setLayoutManager();
+        setAdapter(dishList);
     }
 }
+
+

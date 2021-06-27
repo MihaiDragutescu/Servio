@@ -18,6 +18,7 @@
             android:id="@+id/pendingOrdersImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginStart="12dp"
             android:src="@drawable/ic_dish"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,9 +29,9 @@
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:background="@color/whiteColor"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view1"
-            app:layout_constraintTop_toBottomOf="@+id/pendingOrdersImageView"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pendingOrdersImageView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewWaitingOrders"
@@ -60,10 +61,10 @@
         android:id="@+id/ordersInPreparationRelativeLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:padding="4dp"
         android:layout_margin="8dp"
-        app:layout_constraintStart_toEndOf="@id/pendingOrdersLayout"
+        android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@+id/ordersInPreparationLayout"
+        app:layout_constraintStart_toEndOf="@id/pendingOrdersLayout"
         app:layout_constraintTop_toTopOf="parent">
 
     </RelativeLayout>
@@ -81,8 +82,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="5dp"
             android:src="@drawable/time_animation"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
         <View
@@ -92,7 +93,7 @@
             android:layout_marginTop="8dp"
             android:background="@color/whiteColor"
             app:layout_constraintStart_toEndOf="@+id/view3"
-            app:layout_constraintTop_toBottomOf="@+id/clockAnimation"/>
+            app:layout_constraintTop_toBottomOf="@+id/clockAnimation" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewOrdersInPreparation"
@@ -117,47 +118,5 @@
             app:layout_constraintEnd_toStartOf="@+id/clockAnimation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--<ImageView
-        android:id="@+id/dishQueueImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:src="@drawable/ic_dish"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <LinearLayout
-        android:id="@+id/orderLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@+id/clockAnimation"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/clockAnimation"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/time_animation"
-        app:layout_constraintTop_toBottomOf="@+id/dishQueueImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        tools:ignore="ContentDescription" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
-        android:background="@color/whiteColor"
-        app:layout_constraintStart_toEndOf="@+id/dishQueueImageView" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

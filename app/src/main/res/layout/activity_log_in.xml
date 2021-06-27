@@ -8,26 +8,37 @@
     android:background="@drawable/bkgr_animation"
     tools:context=".activities.LogInActivity">
 
-    <TextView
-        android:id="@+id/loginTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/log_in_activity_title"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        app:fontFamily="@string/font_family_1"
+    <RelativeLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/top_bkgr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/bottomBorderLogin"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/whiteColor"
-        app:layout_constraintTop_toBottomOf="@+id/loginTxtView" />
+        <TextView
+            android:id="@+id/bottomBorderLogin"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/whiteColor"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/titleTxtViewMainMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/app_name"
+            android:textColor="@color/whiteColor"
+            android:textSize="48sp"
+            app:fontFamily="@font/lobster" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/usernameTxtView"
@@ -38,7 +49,7 @@
         android:textColor="#FFFFFF"
         android:textSize="@dimen/font_size"
         app:fontFamily="@string/font_family_1"
-        app:layout_constraintBottom_toTopOf="@+id/mailEditTxtLogIn"
+        app:layout_constraintBottom_toTopOf="@id/mailEditTxtLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_edit_text"
         android:drawableStart="@drawable/ic_mail"
         android:drawablePadding="10dp"
@@ -58,7 +69,7 @@
         android:textColorHint="@color/greyHintColor"
         android:textSize="@dimen/font_size"
         app:fontFamily="@string/font_family_1"
-        app:layout_constraintBottom_toTopOf="@+id/passwordTxtView"
+        app:layout_constraintBottom_toTopOf="@id/passwordTxtView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill" />
@@ -67,7 +78,7 @@
         android:id="@+id/passwordTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="@string/password_label"
         android:textColor="@android:color/white"
@@ -82,8 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="196dp"
         android:background="@drawable/rounded_edit_text"
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="10dp"
@@ -93,10 +104,10 @@
         android:textColorHint="@color/greyHintColor"
         android:textSize="@dimen/font_size"
         app:fontFamily="@string/font_family_1"
-        app:layout_constraintBottom_toTopOf="@+id/exitButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="Autofill" />
+        app:layout_constraintBottom_toBottomOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:ignore="Autofill"
+        tools:layout_editor_absoluteX="8dp" />
 
     <Button
         android:id="@+id/loginButton"
@@ -126,9 +137,9 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTxt"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

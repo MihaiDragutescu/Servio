@@ -30,7 +30,6 @@ public class LoadingActivity extends AppCompatActivity {
         FirebaseFirestore firebaseReference = FirebaseFirestore.getInstance();
         firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseReference, LoadingActivity.this);
 
-        startAnimation();
     }
 
     @Override
@@ -74,14 +73,5 @@ public class LoadingActivity extends AppCompatActivity {
                 }
             }, 2000);
         }
-    }
-
-    private void startAnimation() {
-        ConstraintLayout constraintLayout = findViewById(R.id.loadingLayout);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 }

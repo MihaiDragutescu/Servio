@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
@@ -18,15 +18,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/whiteColor"
             android:textSize="20sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:fontFamily="@string/font_family_1"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view"
             app:layout_constraintEnd_toStartOf="@+id/quantityTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/quantityTextView"
@@ -34,12 +34,12 @@
             android:layout_height="50dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/whiteColor"
-            app:fontFamily="@string/font_family_1"
-            android:textSize="20sp"
             android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/whiteColor"
+            android:textSize="20sp"
+            app:fontFamily="@string/font_family_1"
             app:layout_constraintEnd_toStartOf="@+id/removeBtnRecyclerView"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="Autofill" />
 
         <ImageButton
@@ -59,8 +59,8 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/whiteColor"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

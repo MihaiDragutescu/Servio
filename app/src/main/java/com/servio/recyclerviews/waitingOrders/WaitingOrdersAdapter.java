@@ -19,8 +19,8 @@ import com.servio.models.Order;
 import java.util.List;
 
 public class WaitingOrdersAdapter extends RecyclerView.Adapter<WaitingOrdersViewHolder> {
-    private List<Order> waitingOrdersList;
-    private Context context;
+    private final List<Order> waitingOrdersList;
+    private final Context context;
 
     public WaitingOrdersAdapter(List<Order> waitingOrdersList, Context context) {
         this.waitingOrdersList = waitingOrdersList;
@@ -39,13 +39,13 @@ public class WaitingOrdersAdapter extends RecyclerView.Adapter<WaitingOrdersView
                     new SimpleCallback<Long>() {
                         @Override
                         public void callback(Long hallNumber) {
+                            String orderNumber;
                             if (order.getTableNumber() < 10) {
-                                String orderNumber = String.valueOf(hallNumber) + '0' + order.getTableNumber();
-                                holder.getOrderNumber().setText(orderNumber);
+                                orderNumber = String.valueOf(hallNumber) + '0' + order.getTableNumber();
                             } else {
-                                String orderNumber = String.valueOf(hallNumber) + order.getTableNumber();
-                                holder.getOrderNumber().setText(orderNumber);
+                                orderNumber = String.valueOf(hallNumber) + order.getTableNumber();
                             }
+                            holder.getOrderNumber().setText(orderNumber);
                         }
                     });
         }

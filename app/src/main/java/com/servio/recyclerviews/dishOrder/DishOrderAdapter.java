@@ -17,9 +17,9 @@ import com.servio.models.Dish;
 import java.util.List;
 
 public class DishOrderAdapter extends RecyclerView.Adapter<DishOrderViewHolder> {
-    private SharedViewModel viewModel;
+    private final SharedViewModel viewModel;
     private Context context;
-    private List<Dish> dishList;
+    private final List<Dish> dishList;
 
     public DishOrderAdapter(Context context, List<Dish> dishList) {
         this.context = context;

@@ -46,7 +46,6 @@ public class LogInActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startAnimation();
         initViews();
         setButtonClickEvents();
     }
@@ -139,14 +138,5 @@ public class LogInActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
-    }
-
-    private void startAnimation() {
-        ConstraintLayout constraintLayout = findViewById(R.id.loginActivityLayout);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 }

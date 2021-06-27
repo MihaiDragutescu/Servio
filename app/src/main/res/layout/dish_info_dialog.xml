@@ -5,8 +5,8 @@
     android:id="@+id/scrollView"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@drawable/bkgr_animation"
+    android:padding="16dp"
     tools:context=".activities.DishInfoDialogActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,9 +36,9 @@
             android:layout_height="2dp"
             android:layout_marginTop="4dp"
             android:background="@color/whiteColor"
-            app:layout_constraintTop_toBottomOf="@+id/titleTxtViewDishList"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTxtViewDishList" />
 
         <TextView
             android:id="@+id/textViewDishName"

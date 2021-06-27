@@ -10,21 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.servio.R;
 
 class PreparingOrdersViewHolder extends RecyclerView.ViewHolder {
-    private LinearLayout linearLayout;
+    private final LinearLayout linearLayout;
 
-    private TextView orderNumber;
+    private final TextView orderNumber;
 
     PreparingOrdersViewHolder(@NonNull View itemView) {
         super(itemView);
-        linearLayout =itemView.findViewById(R.id.ordersInPreparationLayout);
+        linearLayout = itemView.findViewById(R.id.ordersInPreparationLayout);
         orderNumber = itemView.findViewById(R.id.orderNumberTextView);
     }
 
-    void setOrderNumber(String number) {
-        orderNumber.setText(number);
+    TextView getOrderNumber() {
+        return orderNumber;
     }
 
-    TextView getOrderNumber(){return orderNumber;}
-
-    LinearLayout getCardView(){return linearLayout;}
+    LinearLayout getCardView() {
+        return linearLayout;
+    }
 }

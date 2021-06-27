@@ -59,10 +59,10 @@
             android:layout_height="0dp"
             android:background="@color/transparentWhiteColor"
             android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomBorderHall"
             app:layout_constraintEnd_toStartOf="@+id/verticalBorderHall"
-            app:layout_constraintTop_toBottomOf="@+id/topBorderHall"
-            app:layout_constraintBottom_toTopOf="@+id/bottomBorderHall">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topBorderHall">
 
             <TextView
                 android:id="@+id/activeOrdersTextView"
@@ -76,21 +76,21 @@
                 android:textSize="16sp"
                 app:fontFamily="@string/font_family_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewActiveOrders"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/simple_border_2"
+                android:paddingStart="4dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="6dp"
                 android:scrollbarSize="5dp"
                 android:scrollbarStyle="outsideInset"
                 android:scrollbarThumbVertical="@color/greyHintColor"
@@ -107,8 +107,8 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/whiteColor"
             app:layout_constraintBottom_toTopOf="@+id/swapHallButton" />
 
@@ -213,21 +213,21 @@
         android:id="@+id/fragmentsLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:baselineAligned="false">
+        android:visibility="gone">
 
         <FrameLayout
             android:id="@+id/menuFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <FrameLayout
             android:id="@+id/orderFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 

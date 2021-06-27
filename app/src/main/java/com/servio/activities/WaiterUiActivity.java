@@ -1,7 +1,6 @@
 package com.servio.activities;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +16,7 @@ public class WaiterUiActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private LinearLayout takeOrders;
-    private LinearLayout settings;
+    private LinearLayout profile;
     private LinearLayout logOut;
 
     @Override
@@ -27,7 +26,6 @@ public class WaiterUiActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startAnimation();
         initViews();
         setOnClickListeners();
     }
@@ -36,7 +34,7 @@ public class WaiterUiActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         takeOrders = findViewById(R.id.takeOrders);
-        settings = findViewById(R.id.settings);
+        profile = findViewById(R.id.profile);
         logOut = findViewById(R.id.logOut);
     }
 
@@ -50,11 +48,10 @@ public class WaiterUiActivity extends AppCompatActivity {
             }
         });
 
-        settings.setOnClickListener(
+        profile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //finish();
                     }
                 }
         );
@@ -68,15 +65,6 @@ public class WaiterUiActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    private void startAnimation() {
-        LinearLayout linearLayout = findViewById(R.id.waiterUILayout);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 
     @Override

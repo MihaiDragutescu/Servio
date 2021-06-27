@@ -8,18 +8,55 @@
     android:background="@drawable/bkgr_animation"
     tools:context=".activities.LoadingActivity">
 
+    <RelativeLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/top_bkgr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/bottomBorderLogin"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/whiteColor"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleTxtViewMainMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/app_name"
+            android:textColor="@color/whiteColor"
+            android:textSize="48sp"
+            app:fontFamily="@font/lobster" />
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/iconImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:src="@mipmap/ic_launcher_app_icon"
+        android:src="@mipmap/ic_launcher_app_icon_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.373"
         tools:ignore="ContentDescription" />
 
     <ProgressBar
@@ -28,9 +65,9 @@
         android:layout_height="wrap_content"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        app:layout_constraintTop_toBottomOf="@+id/iconImageView"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/iconImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

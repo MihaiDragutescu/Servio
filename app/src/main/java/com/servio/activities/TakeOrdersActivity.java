@@ -1,5 +1,6 @@
 package com.servio.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,12 +51,15 @@ import com.servio.fragments.MenuFragment;
 import com.servio.fragments.OrderFragment;
 import com.servio.helpers.FirebaseDatabaseHelper;
 import com.servio.interfaces.SimpleCallback;
+import com.servio.models.Dish;
 import com.servio.models.Order;
 import com.servio.models.Table;
 import com.servio.recyclerviews.activeOrders.ActiveOrdersAdapter;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,6 +92,8 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
 
     private FirebaseFirestore firebaseReference;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
+
+    private List<Dish> dishList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,16 +224,21 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
 
     private void initRecyclerView(String hallName) {
         final Context context = this;
-        firebaseDatabaseHelper.getOrdersData("hallName",hallName,
+        firebaseDatabaseHelper.getOrdersData("hallName", hallName,
                 new SimpleCallback<List<Order>>() {
                     @Override
                     public void callback(List<Order> activeOrders) {
+                        List<Order> activeOrders2=new ArrayList<>();
+                        for(int i=0;i<activeOrders.size();i++){
+                            if(!activeOrders.get(i).getOrderStatus().equals("ready")){
+                                activeOrders2.add(activeOrders.get(i));
+                            }
+                        }
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
                         recyclerViewActiveOrders.setLayoutManager(layoutManager);
 
-                        ActiveOrdersAdapter activeOrdersAdapter = new ActiveOrdersAdapter(activeOrders);
+                        ActiveOrdersAdapter activeOrdersAdapter = new ActiveOrdersAdapter(activeOrders2);
                         recyclerViewActiveOrders.setAdapter(activeOrdersAdapter);
-                        //activeOrdersAdapter.notifyDataSetChanged();
                     }
                 }
         );
@@ -245,16 +257,8 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                         for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                             switch (documentChange.getType()) {
                                 case ADDED:
-                                    Toast.makeText(TakeOrdersActivity.this, "Added", Toast.LENGTH_SHORT).show();
-                                    initRecyclerView(hallName);
-                                    //Toast.makeText(TakeOrdersActivity.this, documentChange.getDocument().getString("dada"), Toast.LENGTH_SHORT).show();
-                                    break;
                                 case MODIFIED:
-                                    //Toast.makeText(TakeOrdersActivity.this, "Modofied", Toast.LENGTH_SHORT).show();
-                                    initRecyclerView(hallName);
-                                    break;
                                 case REMOVED:
-                                    //Toast.makeText(TakeOrdersActivity.this, "Removed", Toast.LENGTH_SHORT).show();
                                     initRecyclerView(hallName);
                                     break;
                             }
@@ -313,44 +317,122 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
         }
     }
 
-    private void showPopup(View v) {
+    private void showPopup(View v, final LinearLayout cell) {
+        final String hallNameAux = hallName.replaceAll("\\s+", "");
+
         final Context wrapper = new ContextThemeWrapper(this, R.style.popupMenuStyle);
         PopupMenu popupMenu = new PopupMenu(wrapper, v);
 
         setForceShowIcon(popupMenu);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.popup_table_options_waiter, popupMenu.getMenu());
-        //popupMenu.show();
 
         MenuItem item = popupMenu.getMenu().findItem(R.id.tableNumber);
         setDialogTitle(item, v, popupMenu);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.addOrder:
-                        optionsLayout.setVisibility(View.GONE);
-                        hallRelativeLayout.setVisibility(View.GONE);
-                        fragmentsLayout.setVisibility(View.VISIBLE);
+                        firebaseDatabaseHelper.getSingleDataFieldValue("Tables", hallNameAux + tableNumberTemp, "tableAvailability",
+                                new SimpleCallback<Boolean>() {
 
-                        OrderFragment orderFragment = new OrderFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("tableNumber", tableNumberTemp);
-                        bundle.putString("hallName", hallName);
-                        orderFragment.setArguments(bundle);
+                                    @Override
+                                    public void callback(Boolean tableAvailability) {
+                                        if (tableAvailability) {
+                                            optionsLayout.setVisibility(View.GONE);
+                                            hallRelativeLayout.setVisibility(View.GONE);
+                                            fragmentsLayout.setVisibility(View.VISIBLE);
 
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.orderFragment, orderFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                                            OrderFragment orderFragment = new OrderFragment();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt("tableNumber", tableNumberTemp);
+                                            bundle.putString("hallName", hallName);
+                                            orderFragment.setArguments(bundle);
 
+                                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                            transaction.replace(R.id.orderFragment, orderFragment);
+                                            transaction.addToBackStack(null);
+                                            transaction.commit();
+                                        } else {
+                                            Toast.makeText(TakeOrdersActivity.this, "Există deja comandă la această masă", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                         break;
                     case R.id.cancelOrder:
-                        Toast.makeText(wrapper, "cancel", Toast.LENGTH_SHORT).show();
+                        android.app.AlertDialog.Builder alertDialog = new AlertDialog.Builder(TakeOrdersActivity.this);
+                        alertDialog.setTitle("Confirmare anumare comandă");
+                        alertDialog.setMessage("Doriți să anulați comanda?");
+
+                        alertDialog.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                firebaseDatabaseHelper.getSingleDataFieldValue("Tables", hallNameAux + tableNumberTemp, "tableAvailability",
+                                        new SimpleCallback<Boolean>() {
+
+                                            @Override
+                                            public void callback(Boolean tableAvailability) {
+                                                if (!tableAvailability) {
+                                                    firebaseDatabaseHelper.deleteDocument("Orders", hallNameAux + "Masa" + tableNumberTemp);
+                                                    firebaseDatabaseHelper.simpleUpdateField("Tables", hallNameAux + tableNumberTemp, "tableAvailability", true);
+                                                    cell.setBackground(ContextCompat.getDrawable(TakeOrdersActivity.this, R.drawable.green_border));
+                                                    Toast.makeText(wrapper, "Comanda a fost anulată", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(TakeOrdersActivity.this, "Nu există comandă la această masă", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                        });
+
+                        alertDialog.setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
                         break;
                     case R.id.editOrder:
-                        Toast.makeText(wrapper, "edit", Toast.LENGTH_SHORT).show();
+                        firebaseDatabaseHelper.getSingleDataFieldValue("Tables", hallNameAux + tableNumberTemp, "tableAvailability",
+                                new SimpleCallback<Boolean>() {
+
+                                    @Override
+                                    public void callback(Boolean tableAvailability) {
+                                        if (!tableAvailability) {
+                                            optionsLayout.setVisibility(View.GONE);
+                                            hallRelativeLayout.setVisibility(View.GONE);
+                                            fragmentsLayout.setVisibility(View.VISIBLE);
+
+                                            firebaseDatabaseHelper.getOrdersData("orderId", hallNameAux+"Masa"+tableNumberTemp,
+                                                    new SimpleCallback<List<Order>>() {
+                                                        @Override
+                                                        public void callback(List<Order> orders) {
+                                                            dishList=orders.get(0).getOrderedDishes();
+
+                                                            OrderFragment orderFragment = new OrderFragment();
+                                                            final Bundle bundle = new Bundle();
+                                                            bundle.putInt("tableNumber", tableNumberTemp);
+                                                            bundle.putString("hallName", hallName);
+                                                            bundle.putSerializable("dishList", (Serializable) dishList);
+
+                                                            orderFragment.setArguments(bundle);
+
+                                                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                                            transaction.replace(R.id.orderFragment, orderFragment);
+                                                            transaction.addToBackStack(null);
+                                                            transaction.commit();
+                                                        }
+                                                    });
+
+                                        } else {
+                                            Toast.makeText(TakeOrdersActivity.this, "La această masă nu există o comandă de modificat", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                         break;
                 }
                 return false;
@@ -415,8 +497,9 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                 });
     }
 
-    private void reloadHall() {
+    public void reloadHall() {
         final String hallNameAux = hallName.replaceAll("\\s+", "");
+
         String documentPath = "hall" + hallName;
         documentPath = documentPath.replaceAll("\\s+", "");
         firebaseDatabaseHelper.getSingleDataFieldValue("Halls", documentPath, "cellCollectionName", new SimpleCallback<String>() {
@@ -456,21 +539,15 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                                                                 imageView.setBackgroundResource(R.drawable.ic_launcher_foreground_masa);
                                                                 imageView.setScaleX((float) 0.75);
                                                                 imageView.setScaleY((float) 0.75);
-                                                                //imageView.setTag("tableImageView");
 
                                                                 Long tableNumber = (Long) documentSnapshot.get("tableNumber");
                                                                 setTableAvailability(tableNumber, cell, hallNameAux);
-                                                                /*if((Boolean) documentSnapshot.get("tableAvailability")){
-                                                                    cell.setBackground(ContextCompat.getDrawable(TakeOrdersActivity.this, R.drawable.simple_border));
-                                                                }else{
-                                                                    cell.setBackground(ContextCompat.getDrawable(TakeOrdersActivity.this, R.drawable.red_border));
-                                                                }*/
 
                                                                 imageView.setOnClickListener(
                                                                         new View.OnClickListener() {
                                                                             @Override
                                                                             public void onClick(View v) {
-                                                                                showPopup(v);
+                                                                                showPopup(v, cell);
                                                                             }
                                                                         }
                                                                 );
@@ -480,13 +557,11 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
 
                                                             case "barImageView":
                                                                 imageView.setBackgroundResource(R.drawable.ic_launcher_foreground_bar);
-                                                                //imageView.setTag("barImageView");
                                                                 cell.addView(imageView);
                                                                 break;
 
                                                             case "kitchenImageView":
                                                                 imageView.setBackgroundResource(R.drawable.ic_launcher_foreground_bucatarie);
-                                                                //imageView.setTag("kitchenImageView");
                                                                 imageView.setScaleX((float) 1.3);
                                                                 imageView.setScaleY((float) 1.3);
                                                                 cell.addView(imageView);
@@ -506,13 +581,11 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                                                                 Resources res = getResources();
                                                                 int resId = res.getIdentifier("ic_launcher_foreground_" + imageName, "drawable", getApplicationContext().getPackageName());
                                                                 imageView.setImageResource(resId);
-                                                                //imageView.setTag(imageName);
                                                                 cell.addView(imageView);
                                                                 break;
 
                                                             case "toiletImageView":
                                                                 imageView.setBackgroundResource(R.drawable.ic_launcher_foreground_toaleta);
-                                                                //imageView.setTag("toiletImageView");
                                                                 cell.addView(imageView);
                                                                 break;
 
@@ -549,6 +622,10 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                     fragmentsLayout.setVisibility(View.GONE);
                     optionsLayout.setVisibility(View.VISIBLE);
                     hallRelativeLayout.setVisibility(View.VISIBLE);
+                    FragmentManager fm = getSupportFragmentManager();
+
+                    OrderFragment fragment = (OrderFragment) fm.findFragmentById(R.id.orderFragment);
+                    fragment.reset();
                     Toast.makeText(TakeOrdersActivity.this, "Comanda a fost anulata", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -566,6 +643,13 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
             finish();
             startActivity(new Intent(TakeOrdersActivity.this, WaiterUiActivity.class));
         }
+    }
+
+    public void saveOrder() {
+        fragmentsLayout.setVisibility(View.GONE);
+        optionsLayout.setVisibility(View.VISIBLE);
+        hallRelativeLayout.setVisibility(View.VISIBLE);
+        reloadHall();
     }
 
     @Override

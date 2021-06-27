@@ -204,10 +204,10 @@ public class HallActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         AlertDialog alertDialog = new AlertDialog.Builder(HallActivity.this).create();
                         alertDialog.setTitle("Ajutor");
-                        alertDialog.setMessage("In fereastra 'Administreaza Salile' puteti efectua actiuni precum:" + "\n\n" +
-                                " - 'Adauga sala': creeaza o sala noua cu dimensiunea specificata in care veti putea adauga diverse elemente (masa, bucatarie, baie, bar, perete orizontal sau vertical) prin tragerea din meniul din partea stanga;" + "\n\n" +
-                                " - 'Sterge sala': elimina sala accesata din lista;" + "\n\n" +
-                                " - 'Schimba sala': permite redeschiderea unei sali pentru a se face modificari;"
+                        alertDialog.setMessage("În fereastra 'Administrează Sălile' puteți efectua acțiuni precum:" + "\n\n" +
+                                " - 'Adaugă sală': creează o sală nouă cu dimensiunea specificată în care veți putea adăuga diverse elemente (masă, bucătarie, baie, bar, perete orizontal sau vertical) prin tragerea din meniul din partea stangă;" + "\n\n" +
+                                " - 'Șterge sala': elimină sala curentă din listă;" + "\n\n" +
+                                " - 'Schimbă sala': permite redeschiderea unei săli pentru a se face modificări;"
                         );
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                 new DialogInterface.OnClickListener() {
@@ -542,7 +542,7 @@ public class HallActivity extends AppCompatActivity {
                 new SimpleCallback<Integer>() {
                     @Override
                     public void callback(Integer count) {
-                        hall.put("hallNumber",count+1);
+                        hall.put("hallNumber", count + 1);
                         firebaseDatabaseHelper.insertData("Halls", "hall" + hallNameAux, hall);
                         progressBar.setVisibility(View.GONE);
                     }
@@ -564,7 +564,6 @@ public class HallActivity extends AppCompatActivity {
 
     public void deleteData() {
         String hallNameAux = hallName.replaceAll("\\s+", "");
-        Toast.makeText(this, hallNameAux, Toast.LENGTH_SHORT).show();
         hallNameTextView.setText("");
         helpImageButton.setVisibility(View.VISIBLE);
         firebaseDatabaseHelper.deleteDocumentsWithGreaterThanCondition("Tables", "tableId", hallNameAux);
@@ -621,8 +620,6 @@ public class HallActivity extends AppCompatActivity {
 
                 firebaseDatabaseHelper.updateFields("Cells" + hallNameAux,
                         "cellId", (String) cell.getTag(), "content", null);
-
-                Toast.makeText(HallActivity.this, "Elementul selectat a fost sters", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -693,9 +690,6 @@ public class HallActivity extends AppCompatActivity {
                 case DragEvent.ACTION_DRAG_ENTERED:
                     break;
 
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
-
                 case DragEvent.ACTION_DROP:
                     switch (imageId) {
                         case "tableImageView": {
@@ -735,22 +729,10 @@ public class HallActivity extends AppCompatActivity {
                             break;
                         }
                         case "wallImageView":
-                            //View view = (View) event.getLocalState();
                             cell = (LinearLayout) v;
 
                             if (cell.getChildCount() == 0) {
-                                //ImageView oldView = (ImageView) view;
-                                //ImageView newView = new ImageView(getApplicationContext());
-
-                                //newView.setImageBitmap(((BitmapDrawable) oldView.getDrawable()).getBitmap());
-
                                 cellId = (String) v.getTag();
-                                //newView.setTag(imageId);
-                                //tempView = newView;
-
-                                //deleteElementOnClick(newView);
-                                //container.addView(newView);
-                                //view.setVisibility(View.VISIBLE);
 
                                 startActivityForResult(new Intent(HallActivity.this, NewWallActivity.class), 3);
                             } else {
@@ -867,7 +849,6 @@ public class HallActivity extends AppCompatActivity {
 
                     firebaseDatabaseHelper.insertData("Tables", tableId, table);
 
-                    Toast.makeText(HallActivity.this, "Informatiile mesei au fost salvate cu succes", Toast.LENGTH_SHORT).show();
                 } else {
                     LinearLayout cell = (LinearLayout) tempView.getParent();
                     cell.removeAllViews();
@@ -920,11 +901,7 @@ public class HallActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String wallType = data.getStringExtra("wallType");
                 addWall(wallType);
-            } /*else {
-                Toast.makeText(this, data.getStringExtra("wallType"), Toast.LENGTH_SHORT).show();
-                LinearLayout cell = (LinearLayout) tempView.getParent();
-                cell.removeAllViews();
-            }*/
+            }
         }
     }
 
@@ -940,6 +917,7 @@ public class HallActivity extends AppCompatActivity {
         setDialogTitle(item, v, popupMenu);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {

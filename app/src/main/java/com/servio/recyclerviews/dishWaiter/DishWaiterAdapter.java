@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DishWaiterAdapter extends RecyclerView.Adapter<DishWaiterViewHolder> {
-    private SharedViewModel viewModel;
-    private Context mContext;
+    private final SharedViewModel viewModel;
+    private final Context mContext;
     private List<Dish> dishList;
-    private List<Dish> orderDishList;
+    private final List<Dish> orderDishList;
 
     public DishWaiterAdapter(Context context, List<Dish> dishList) {
         mContext = context;
@@ -73,7 +73,7 @@ public class DishWaiterAdapter extends RecyclerView.Adapter<DishWaiterViewHolder
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int quantity = Integer.valueOf(String.valueOf(dishViewHolder.getDishQuantity().getText()));
+                        int quantity = Integer.parseInt(String.valueOf(dishViewHolder.getDishQuantity().getText()));
 
                         if (orderDishList.size() != 0) {
                             int valid = 1;

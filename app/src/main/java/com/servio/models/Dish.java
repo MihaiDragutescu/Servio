@@ -69,5 +69,4 @@ public class Dish implements Serializable {
     public String getDishCategory() {
         return dishCategory;
     }
-
 }

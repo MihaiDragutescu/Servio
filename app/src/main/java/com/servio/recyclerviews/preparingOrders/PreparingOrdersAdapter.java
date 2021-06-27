@@ -20,8 +20,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PreparingOrdersAdapter extends RecyclerView.Adapter<PreparingOrdersViewHolder> {
-    private List<Order> preparingOrdersList;
-    private Context context;
+    private final List<Order> preparingOrdersList;
+    private final Context context;
 
     public PreparingOrdersAdapter(List<Order> preparingOrdersList, Context context) {
         this.preparingOrdersList = preparingOrdersList;
@@ -40,13 +40,13 @@ public class PreparingOrdersAdapter extends RecyclerView.Adapter<PreparingOrders
                     new SimpleCallback<Long>() {
                         @Override
                         public void callback(Long hallNumber) {
+                            String orderNumber;
                             if (order.getTableNumber() < 10) {
-                                String orderNumber = String.valueOf(hallNumber) + '0' + order.getTableNumber();
-                                holder.getOrderNumber().setText(orderNumber);
+                                orderNumber = String.valueOf(hallNumber) + '0' + order.getTableNumber();
                             } else {
-                                String orderNumber = String.valueOf(hallNumber) + order.getTableNumber();
-                                holder.getOrderNumber().setText(orderNumber);
+                                orderNumber = String.valueOf(hallNumber) + order.getTableNumber();
                             }
+                            holder.getOrderNumber().setText(orderNumber);
                         }
                     });
         }

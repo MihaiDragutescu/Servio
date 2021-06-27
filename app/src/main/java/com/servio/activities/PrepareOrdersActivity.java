@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Animatable;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -54,7 +53,7 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
     private RecyclerView waitingOrdersRecyclerView;
     private RecyclerView preparingOrdersRecyclerView;
 
-    private List<String> openedOrders=new ArrayList<>();
+    private final List<String> openedOrders = new ArrayList<>();
     private int xDelta;
     private int yDelta;
     private int xTemp;
@@ -76,34 +75,18 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
                 new IntentFilter("preparingOrder-object"));
 
         initViews();
-        startAnimation();
 
         firebaseFirestoreReference.collection("Orders").addSnapshotListener(
                 new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Toast.makeText(PrepareOrdersActivity.this, "sdfsdfsdf", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
                         for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                             switch (documentChange.getType()) {
                                 case ADDED:
-                                    initWaitingOrdersRecyclerView();
-                                    initPreparingOrdersRecyclerView();
-                                    //Toast.makeText(PrepareOrdersActivity.this, "ADDED", Toast.LENGTH_SHORT).show();
-                                    //Toast.makeText(PrepareOrdersActivity.this, documentChange.getDocument().getString("dada"), Toast.LENGTH_SHORT).show();
-                                    break;
                                 case MODIFIED:
-                                    initWaitingOrdersRecyclerView();
-                                    initPreparingOrdersRecyclerView();
-                                    //Toast.makeText(PrepareOrdersActivity.this, "Modofied", Toast.LENGTH_SHORT).show();
-                                    break;
                                 case REMOVED:
                                     initWaitingOrdersRecyclerView();
                                     initPreparingOrdersRecyclerView();
-                                    //Toast.makeText(PrepareOrdersActivity.this, "Removed", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                         }
@@ -165,9 +148,10 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         public void onReceive(Context context, Intent intent) {
             Order order = (Order) intent.getSerializableExtra("waitingOrder");
 
-            if(!openedOrders.contains(order.getOrderId())){
-                createOrderLayout(order);
-            }else{
+            if (!openedOrders.contains(order.getOrderId())) {
+                String status = order.getOrderStatus();
+                createOrderLayout(order, status);
+            } else {
                 Toast.makeText(context, "Comanda este deja deschisa", Toast.LENGTH_SHORT).show();
             }
         }
@@ -178,16 +162,17 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         public void onReceive(Context context, Intent intent) {
             final Order order = (Order) intent.getSerializableExtra("preparingOrder");
 
-            if(!openedOrders.contains(order.getOrderId())){
-                createOrderLayout(order);
-            }else{
+            if (!openedOrders.contains(order.getOrderId())) {
+                String status = order.getOrderStatus();
+                createOrderLayout(order, status);
+            } else {
                 Toast.makeText(context, "Comanda este deja deschisa", Toast.LENGTH_SHORT).show();
             }
         }
     };
 
     @SuppressLint({"ResourceType", "ClickableViewAccessibility"})
-    private void createOrderLayout(Order order) {
+    private void createOrderLayout(Order order, String status) {
         openedOrders.add(order.getOrderId());
 
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
@@ -196,7 +181,7 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         ConstraintLayout constraintLayout = new ConstraintLayout(this);
         constraintLayout.setId(0);
 
-        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(400, 525);
+        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(525, 650);
         if (xTemp < 450) {
             params2.setMargins(450, 0, 0, 0);
         }
@@ -234,7 +219,7 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
 
         TextView waiterNameText = new TextView(this);
         String[] name = order.getWaiterName().split("[\\s-]+");
-        String shortWaiterName = name[0] + " " + name[1].substring(0, 1) + ".";
+        String shortWaiterName = name[0] + " " + name[1].charAt(0) + ".";
         waiterNameText.setText(shortWaiterName);
         textViewOrderList.add(waiterNameText);
 
@@ -266,7 +251,6 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         textViewList.get(0).setTextColor(Color.WHITE);
         textViewList.get(0).setTypeface(Typeface.create(String.valueOf(R.string.font_family_1), Typeface.NORMAL));
         textViewList.get(0).setMaxLines(1);
-        //TextViewCompat.setAutoSizeTextTypeWithDefaults(textViewList.get(0), TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         constraintLayout.addView(textViewList.get(0));
 
@@ -278,31 +262,20 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         constraintLayout.addView(view);
 
         for (int i = 1; i < textViewList.size(); i++) {
-            //int[] list={16};
-            //TextViewCompat.setAutoSizeTextTypeUniformWithPresetSizes(textViewList.get(i), list, TypedValue.COMPLEX_UNIT_SP);
             textViewList.get(i).setId(i + 1);
             textViewList.get(i).setLayoutParams(params);
             textViewList.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             textViewList.get(i).setTextColor(Color.WHITE);
             textViewList.get(i).setTypeface(Typeface.create(String.valueOf(R.string.font_family_1), Typeface.NORMAL));
-            //textViewList.get(i).setMaxLines(1);
-            //TextViewCompat.setAutoSizeTextTypeWithDefaults(textViewList.get(i), TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
-
             constraintLayout.addView(textViewList.get(i));
         }
 
         for (int i = 0; i < textViewOrderList.size(); i++) {
-            //textViewOrderList.get(i).setMaxLines(1);
-            //int[] list={16};
-            //TextViewCompat.setAutoSizeTextTypeUniformWithPresetSizes(textViewOrderList.get(i), list, TypedValue.COMPLEX_UNIT_SP);
-            //textViewOrderList.get(i).setMaxWidth(100);
             if (i == textViewOrderList.size() - 1) {
                 ViewGroup.LayoutParams params4 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 190);
                 textViewOrderList.get(i).setLayoutParams(params4);
-                //TextViewCompat.setAutoSizeTextTypeWithDefaults(textViewOrderList.get(i), TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
             } else {
                 textViewOrderList.get(i).setLayoutParams(params);
-                //TextViewCompat.setAutoSizeTextTypeWithDefaults(textViewOrderList.get(i), TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
             }
             textViewOrderList.get(i).setId(i + 8);
             textViewOrderList.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -314,7 +287,7 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
 
         Button postponeOrderButton = new Button(this);
         postponeOrderButton.setId(12);
-        ViewGroup.LayoutParams params4 = new ViewGroup.LayoutParams(150, 60);
+        ViewGroup.LayoutParams params4 = new ViewGroup.LayoutParams(227, 75);
         postponeOrderButton.setLayoutParams(params4);
         postponeOrderButton.setText(R.string.postpone_button_text);
         postponeOrderButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
@@ -325,18 +298,34 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
 
         constraintLayout.addView(postponeOrderButton);
 
-        Button prepareOrderButton = new Button(this);
-        prepareOrderButton.setId(13);
-        prepareOrderButton.setLayoutParams(params4);
-        prepareOrderButton.setText(R.string.prepare_button_text);
-        prepareOrderButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        prepareOrderButton.setPadding(4, 2, 4, 2);
-        prepareOrderButton.setTextColor(Color.WHITE);
-        prepareOrderButton.setTypeface(Typeface.create(String.valueOf(R.string.font_family_1), Typeface.BOLD));
-        prepareOrderButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_button_hall));
-        //TextViewCompat.setAutoSizeTextTypeWithDefaults(prepareOrderButton, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+        if (status.equals("waiting")) {
+            Button prepareOrderButton = new Button(this);
+            prepareOrderButton.setId(13);
+            prepareOrderButton.setLayoutParams(params4);
+            prepareOrderButton.setText(R.string.prepare_button_text);
+            prepareOrderButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            prepareOrderButton.setPadding(4, 2, 4, 2);
+            prepareOrderButton.setTextColor(Color.WHITE);
+            prepareOrderButton.setTypeface(Typeface.create(String.valueOf(R.string.font_family_1), Typeface.BOLD));
+            prepareOrderButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_button_hall));
 
-        constraintLayout.addView(prepareOrderButton);
+            constraintLayout.addView(prepareOrderButton);
+            setPrepareButtonClickListener(prepareOrderButton, order);
+        } else if (status.equals("preparing")) {
+            Button finishOrderButton = new Button(this);
+            finishOrderButton.setId(13);
+            finishOrderButton.setLayoutParams(params4);
+            finishOrderButton.setText(R.string.finish_button_text);
+            finishOrderButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            finishOrderButton.setPadding(4, 2, 4, 2);
+            finishOrderButton.setTextColor(Color.WHITE);
+            finishOrderButton.setTypeface(Typeface.create(String.valueOf(R.string.font_family_1), Typeface.BOLD));
+            finishOrderButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_button_hall));
+
+            constraintLayout.addView(finishOrderButton);
+            setFinishButtonClickListener(finishOrderButton, order);
+        }
+
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
@@ -345,37 +334,26 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
             if (i == 0) {
                 constraintSet.connect(1, ConstraintSet.TOP, 0, ConstraintSet.TOP, 0);
                 constraintSet.connect(1, ConstraintSet.LEFT, 0, ConstraintSet.LEFT, 4);
-                //constraintSet.connect(1, ConstraintSet.RIGHT, 0, ConstraintSet.RIGHT, 0);
-
                 constraintSet.connect(7, ConstraintSet.TOP, 1, ConstraintSet.BOTTOM, 0);
-                //constraintSet.connect(1, ConstraintSet.RIGHT,0, ConstraintSet.RIGHT, 0);
             } else if (i == 1) {
                 constraintSet.connect(textViewList.get(i).getId(), ConstraintSet.TOP, 7, ConstraintSet.BOTTOM, 4);
                 constraintSet.connect(textViewList.get(i).getId(), ConstraintSet.LEFT, 0, ConstraintSet.LEFT, 4);
             } else {
                 constraintSet.connect(textViewList.get(i).getId(), ConstraintSet.TOP, textViewList.get(i - 1).getId(), ConstraintSet.BOTTOM, 2);
                 constraintSet.connect(textViewList.get(i).getId(), ConstraintSet.LEFT, 0, ConstraintSet.LEFT, 4);
-                //constraintSet.connect(textViewList.get(i).getId(), ConstraintSet.RIGHT,0, ConstraintSet.RIGHT, 0);
             }
         }
 
         for (int i = 0; i < textViewOrderList.size(); i++) {
-            //constraintSet.constrainDefaultWidth(textViewOrderList.get(i).getId(), ConstraintSet.MATCH_CONSTRAINT_WRAP);
-          /*  ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textViewOrderList.get(i).getLayoutParams();
-            layoutParams.constrainedWidth = true;
-
-            textViewOrderList.get(i).setLayoutParams(layoutParams);*/
             if (i == 0) {
                 constraintSet.connect(8, ConstraintSet.TOP, 7, ConstraintSet.BOTTOM, 4);
                 constraintSet.connect(8, ConstraintSet.RIGHT, 0, ConstraintSet.RIGHT, 4);
-                //constraintSet.connect(8, ConstraintSet.LEFT, 1, ConstraintSet.RIGHT, 4);
             } else if (i == textViewOrderList.size() - 1) {
                 constraintSet.connect(textViewOrderList.get(i).getId(), ConstraintSet.TOP, 5, ConstraintSet.BOTTOM, 2);
                 constraintSet.connect(textViewOrderList.get(i).getId(), ConstraintSet.LEFT, 0, ConstraintSet.LEFT, 8);
             } else {
                 constraintSet.connect(textViewOrderList.get(i).getId(), ConstraintSet.TOP, textViewOrderList.get(i - 1).getId(), ConstraintSet.BOTTOM, 2);
                 constraintSet.connect(textViewOrderList.get(i).getId(), ConstraintSet.RIGHT, 0, ConstraintSet.RIGHT, 4);
-                //constraintSet.connect(textViewOrderList.get(i).getId(), ConstraintSet.LEFT, i + 7, ConstraintSet.RIGHT, 4);
             }
         }
 
@@ -387,15 +365,14 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
 
         constraintSet.applyTo(constraintLayout);
 
-        setPostponeButtonClickListener(postponeOrderButton,order);
-        setPrepareButtonClickListener(prepareOrderButton, order);
+        setPostponeButtonClickListener(postponeOrderButton, order);
 
         constraintLayout.setOnTouchListener(this);
         xTemp = 450;
 
     }
 
-    private void setPostponeButtonClickListener(final Button button,final Order order) {
+    private void setPostponeButtonClickListener(final Button button, final Order order) {
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -418,6 +395,24 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
                         firebaseDatabaseHelper.simpleUpdateField("Orders", order.getOrderId(), "orderStatus", "preparing");
                         openedOrders.remove(order.getOrderId());
                         Toast.makeText(PrepareOrdersActivity.this, "Comanda este in preparare", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    private void setFinishButtonClickListener(final Button button, final Order order) {
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ConstraintLayout constraintLayout = (ConstraintLayout) button.getParent();
+                        constraintLayout.setVisibility(View.GONE);
+                        firebaseDatabaseHelper.simpleUpdateField("Orders", order.getOrderId(), "orderStatus", "ready");
+                        String documentPath = order.getOrderId().replace("Masa", "");
+                        firebaseDatabaseHelper.simpleUpdateField("Tables", documentPath, "tableAvailability", true);
+                        openedOrders.remove(order.getOrderId());
+                        initPreparingOrdersRecyclerView();
+                        Toast.makeText(PrepareOrdersActivity.this, "Comanda a fost finalizată", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -449,14 +444,5 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         }
         relativeLayout.invalidate();
         return true;
-    }
-
-    private void startAnimation() {
-        ConstraintLayout constraintLayout = findViewById(R.id.preparingOrdersLayout);
-
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(3500);
-        animationDrawable.setExitFadeDuration(3500);
-        animationDrawable.start();
     }
 }
