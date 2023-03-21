@@ -8,4 +8,5 @@
     <color name="greyHintColor">#C2C2C2</color>
     <color name="lightBlueColor">#C30461B6</color>
     <color name="transparentWhiteColor">#1AFFFFFF</color>
+    <color name="transparentColor">#00000000</color>
 </resources>

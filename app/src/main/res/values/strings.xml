@@ -2,6 +2,7 @@
     <string name="app_name">Servio</string>
     <string name="log_in_activity_title">Autentificare</string>
     <string name="log_in_button_text">Autentifică</string>
+    <string name="create_account_text">Creează cont</string>
     <string name="close_button_text">Închide</string>
     <string name="log_out_button_text">Deconectare</string>
     <string name="employee_managrmrnt_button_text">Angajați</string>
