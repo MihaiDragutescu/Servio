@@ -56,7 +56,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private FirebaseFirestore firebaseReference;
-    private FirebaseAuth firebaseAuthSecondary;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +93,9 @@ public class NewEmployeeActivity extends AppCompatActivity {
 
         try {
             FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "RestaurantFabulos");
-            firebaseAuthSecondary = FirebaseAuth.getInstance(myApp);
+            firebaseAuth = FirebaseAuth.getInstance(myApp);
         } catch (IllegalStateException e) {
-            firebaseAuthSecondary = FirebaseAuth.getInstance(FirebaseApp.getInstance("RestaurantFabulos"));
+            firebaseAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("RestaurantFabulos"));
         }
     }
 
@@ -166,12 +166,12 @@ public class NewEmployeeActivity extends AppCompatActivity {
                         employee.put("email", email);
 
                         progressBar.setVisibility(View.VISIBLE);
-                        firebaseAuthSecondary.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    FirebaseUser currentFirebaseUser = firebaseAuthSecondary.getCurrentUser();
+                                    FirebaseUser currentFirebaseUser = firebaseAuth.getCurrentUser();
                                     employee.put("userID", currentFirebaseUser.getUid());
 
                                     UserProfileChangeRequest profileRequest = new UserProfileChangeRequest.Builder().setDisplayName(lastName + " " + firstName).build();
@@ -191,7 +191,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
                                                 public void onSuccess(Void aVoid) {
                                                     progressBar.setVisibility(View.GONE);
                                                     Toast.makeText(NewEmployeeActivity.this, "Angajatul a fost adaugat cu succes.", Toast.LENGTH_SHORT).show();
-                                                    firebaseAuthSecondary.signOut();
+                                                    firebaseAuth.signOut();
 
                                                     finish();
                                                     startActivity(new Intent(NewEmployeeActivity.this, EmployeesListActivity.class));
