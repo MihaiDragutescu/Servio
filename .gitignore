@@ -1,13 +1,33 @@
-*.iml
-.gradle
+# Built application files
+*.apk
+*.ap_
+*.aab
+*.aab.zip
+
+# Files for the Android Studio IDE
+/.idea/
+/.gradle/
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
+/*.iml
+/.navigation/
+/.cxx/
+
+# Android build output
+/build/
+/captures/
+/outputs/
+
+# Android generated files
+/*/build/
+/*/generated/
+/*/bin/
+/*/gen/
+/*/intermediates/
+/*/tmp/
+/*/coverage/
+/*/lint-results/
+/*/apk-debug/
+/*/apk-release/
+/*/aar/
+/*/proguard/
+/*/crashlytics-build.properties
