@@ -2,47 +2,57 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginActivityLayout"
+    android:id="@+id/createAccountActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkgr_animation"
-    tools:context=".activities.LogInActivity">
+    tools:context=".activities.CreateAccountActivity">
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/createAccountButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button_1"
-        android:text="@string/log_in_button_text"
+        android:text="@string/create_account_text"
         android:textColor="@color/whiteColor"
-        app:layout_constraintBottom_toTopOf="@id/exitButton"
+        app:layout_constraintBottom_toTopOf="@id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/exitButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button_1"
-        android:text="@string/close_button_text"
-        android:textColor="@color/whiteColor"
-        app:layout_constraintBottom_toTopOf="@id/newAccountButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/newAccountButton"
+        android:id="@+id/backButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
-        android:background="@color/transparentColor"
-        android:text="@string/create_account_text"
+        android:background="@drawable/rounded_button_1"
+        android:text="@string/back_label"
         android:textColor="@color/whiteColor"
-        android:textSize="@dimen/font_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/restaurantNameEditTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_restaurant"
+        android:drawablePadding="10dp"
+        android:hint="@string/restaurant_hint"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@id/mailTxtView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="Autofill" />
+
 
     <EditText
         android:id="@+id/passwordEditTxt"
@@ -60,13 +70,35 @@
         android:textColorHint="@color/greyHintColor"
         android:textSize="@dimen/font_size"
         app:fontFamily="@string/font_family_1"
-        app:layout_constraintBottom_toBottomOf="@+id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintBottom_toTopOf="@id/createAccountButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill"
         tools:layout_editor_absoluteX="8dp" />
 
     <EditText
-        android:id="@+id/mailEditTxtLogIn"
+        android:id="@+id/passwordConfirmEditTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_edit_text"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="10dp"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColor="@color/whiteColor"
+        android:textColorHint="@color/greyHintColor"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintTop_toBottomOf="@+id/passwordConfirmTxtView"
+        tools:ignore="Autofill"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/mailEditTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -90,10 +122,10 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordConfirmEditTxt" />
 
     <RelativeLayout
         android:id="@+id/logo"
@@ -106,7 +138,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/bottomBorderLogin"
+            android:id="@+id/bottomBorderCreateAccount"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/whiteColor"
@@ -142,7 +174,21 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/usernameTxtView"
+        android:id="@+id/passwordConfirmTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/password_label_confirm"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/mailTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -150,7 +196,20 @@
         android:textColor="#FFFFFF"
         android:textSize="@dimen/font_size"
         app:fontFamily="@string/font_family_1"
-        app:layout_constraintBottom_toTopOf="@id/mailEditTxtLogIn"
+        app:layout_constraintBottom_toTopOf="@id/mailEditTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/restaurantNameTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/restaurant_label"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/font_size"
+        app:fontFamily="@string/font_family_1"
+        app:layout_constraintBottom_toTopOf="@id/restaurantNameEditTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

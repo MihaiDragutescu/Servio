@@ -139,7 +139,8 @@ public class LogInActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(LogInActivity.this, "Account will be created.", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(LogInActivity.this, CreateAccountActivity.class));
                     }
                 }
         );

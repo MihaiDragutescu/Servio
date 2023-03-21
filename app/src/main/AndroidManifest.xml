@@ -41,6 +41,9 @@
             android:name="com.servio.activities.LogInActivity"
             android:screenOrientation="sensorPortrait" />
         <activity
+            android:name="com.servio.activities.CreateAccountActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
             android:name="com.servio.activities.ChefUIActivity"
             android:screenOrientation="sensorPortrait" />
         <activity
