@@ -61,9 +61,9 @@ The main features are split in three categories according to the role of the use
 The app launches with the log in screen. You will first need to create a new account for your restaurant. After that you will be automatically logged in and redirected to the main menu for the administrator version of the app.
 
 <p float="middle">
-   <img src="https://user-images.githubusercontent.com/37268151/227045100-a0f1a0e9-1740-4f6d-9d3d-057820cb5b92.png" width="33%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227047446-56b798e2-2827-4a9e-b965-31a32bb99910.png" width="33%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227047460-7addbdb0-f157-4231-b182-7fb47d171992.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227045100-a0f1a0e9-1740-4f6d-9d3d-057820cb5b92.png" width="32.8%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227047446-56b798e2-2827-4a9e-b965-31a32bb99910.png" width="32.8%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227047460-7addbdb0-f157-4231-b182-7fb47d171992.png" width="32.8%" />
 </p>
 
 Now since you are logged in as the administrator you are allowed to manage your employees, restaurant menu and the restaurant rooms. To access the versions of the app for waiter or chef you need to create the profiles and reconnect to the app with the credentials that you set.
@@ -71,9 +71,9 @@ Now since you are logged in as the administrator you are allowed to manage your 
 A few screenshots from the administrator version of the app:
 
 <p float="middle">
-   <img src="https://user-images.githubusercontent.com/37268151/227050989-b457bb7a-adff-428b-9da6-f5b7ea21cfe2.png" width="33%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227051007-bc96cd58-c277-4a92-bf81-f639b4afb355.png" width="33%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227051016-10de3ffe-53b6-4c68-8195-563ca334dce1.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227050989-b457bb7a-adff-428b-9da6-f5b7ea21cfe2.png" width="32.8%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227051007-bc96cd58-c277-4a92-bf81-f639b4afb355.png" width="32.8%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227051016-10de3ffe-53b6-4c68-8195-563ca334dce1.png" width="32.8%" />
 </p>
 
 <p float="middle">
