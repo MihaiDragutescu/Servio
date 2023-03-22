@@ -146,8 +146,8 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getDishesData(final SimpleCallback<List<Dish>> finishedCallback) {
-        firebaseFirestoreReference.collection("Dishes").get().addOnCompleteListener(
+    public void getDishesData(final SimpleCallback<List<Dish>> finishedCallback, final String restaurant) {
+        firebaseFirestoreReference.collection("Dishes").whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

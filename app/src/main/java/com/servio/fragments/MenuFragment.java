@@ -15,12 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.servio.R;
+import com.servio.activities.PrepareOrdersActivity;
 import com.servio.helpers.FirebaseDatabaseHelper;
 import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Dish;
+import com.servio.models.Order;
 import com.servio.recyclerviews.dishWaiter.DishWaiterAdapter;
+import com.servio.recyclerviews.waitingOrders.WaitingOrdersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,7 @@ public class MenuFragment extends Fragment {
     private EditText searchView;
     private RecyclerView recyclerView;
     private List<Dish> dishList = new ArrayList<>();
+    final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -47,11 +52,16 @@ public class MenuFragment extends Fragment {
     }
 
     private void getDishes() {
-        firebaseDatabaseHelper.getDishesData(new SimpleCallback<List<Dish>>() {
+        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
             @Override
-            public void callback(List<Dish> list) {
-                dishList = new ArrayList<>(list);
-                setAdapter();
+            public void callback(String restaurant) {
+                firebaseDatabaseHelper.getDishesData(new SimpleCallback<List<Dish>>() {
+                    @Override
+                    public void callback(List<Dish> list) {
+                        dishList = new ArrayList<>(list);
+                        setAdapter();
+                    }
+                }, restaurant);
             }
         });
     }
