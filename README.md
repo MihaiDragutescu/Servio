@@ -26,7 +26,7 @@ To install and run the project on your Android device, you will need to have the
 
 [(Back to top)](#table-of-contents)
 
-1. Clone the repository to your local machine or by downloading the repository as a ZIP file.
+1. Clone the repository to your local machine or download the repository as a ZIP file.
 2. Open the project with Android Studio.
 3. Connect your Android device to your computer using a USB cable.
 4. In Android Studio, click on the "Run" button in the toolbar.
@@ -91,7 +91,7 @@ Screenshots from the waiter version of the app:
 </p>
 
 <p float="right">
- <img src="https://user-images.githubusercontent.com/37268151/227056140-2e06aa3a-274a-4c6e-b492-0cd13a6112b1.jpg" width="80%" />
+ <img src="https://user-images.githubusercontent.com/37268151/227062762-5d3a30bc-6af3-4f5a-94c2-34cf52a8cdaf.jpg" width="80%" />
 </p>
 
 Screenshot from the chef version of the app:
