@@ -77,20 +77,26 @@ A few screenshots from the administrator version of the app:
 </p>
 
 <p float="middle">
-   <img src="https://user-images.githubusercontent.com/37268151/227053624-455a388f-c3c9-4980-b8d8-43cd363e09c1.jpg" width="49.7%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227053660-0ceae8b1-501e-4a83-a167-083348f27326.jpg" width="49.7%" />
+ <img src="https://user-images.githubusercontent.com/37268151/227053624-455a388f-c3c9-4980-b8d8-43cd363e09c1.jpg" width="80%" />
+</p>
+
+<p float="middle">
+ <img src="https://user-images.githubusercontent.com/37268151/227053660-0ceae8b1-501e-4a83-a167-083348f27326.jpg" width="80%" />
 </p>
 
 Screenshots from the waiter version of the app:
 
-<p float="middle">
-   <img src="https://user-images.githubusercontent.com/37268151/227056248-912bb398-713b-47c8-8d7f-6ec6d1635909.jpg" width="49.7%" />
-   <img src="https://user-images.githubusercontent.com/37268151/227056140-2e06aa3a-274a-4c6e-b492-0cd13a6112b1.jpg" width="49.7%" />
+<p float="right">
+ <img src="https://user-images.githubusercontent.com/37268151/227056248-912bb398-713b-47c8-8d7f-6ec6d1635909.jpg" width="80%" />
+</p>
+
+<p float="right">
+ <img src="https://user-images.githubusercontent.com/37268151/227056140-2e06aa3a-274a-4c6e-b492-0cd13a6112b1.jpg" width="80%" />
 </p>
 
 Screenshot from the chef version of the app:
 
 <p float="middle">
-   <img src="https://user-images.githubusercontent.com/37268151/227057327-c6ef27ef-3f01-4ce5-8142-10d6562b81c6.jpg" width="49.7%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227057327-c6ef27ef-3f01-4ce5-8142-10d6562b81c6.jpg" width="80%" />
 </p>
 
