@@ -45,7 +45,6 @@ public class EmployeesListActivity extends AppCompatActivity {
     private Context context;
     private final FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private EmployeeAdapter employeeAdapter;
-
     private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
 
     @Override
