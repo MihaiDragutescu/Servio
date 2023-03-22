@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -94,6 +95,7 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     private List<Dish> dishList;
+    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +150,7 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                     selectHallLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
-        });
+        }, restaurant);
     }
 
     private void initClickListeners() {
@@ -216,7 +218,7 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                                     }
                                 }
                             }
-                        });
+                        }, restaurant);
                     }
                 }
         );
@@ -298,7 +300,7 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                 }
                 progressBar.setVisibility(View.GONE);
             }
-        });
+        }, restaurant);
     }
 
     private void setHallSize(String hallSize) {

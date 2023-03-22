@@ -127,9 +127,9 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void checkEmptyCollection(String collectionPath, final SimpleCallback<Boolean> finishedCallback) {
+    public void checkEmptyCollection(String collectionPath, final SimpleCallback<Boolean> finishedCallback, final String restaurant) {
         CollectionReference collectionReference = firebaseFirestoreReference.collection(collectionPath);
-        collectionReference.get().addOnCompleteListener(
+        collectionReference.whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -202,8 +202,8 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getDataFieldsValues(String collectionPath, final String field, final SimpleCallback<List<String>> finishedCallback) {
-        firebaseFirestoreReference.collection(collectionPath).get().addOnCompleteListener(
+    public void getDataFieldsValues(String collectionPath, final String field, final SimpleCallback<List<String>> finishedCallback, final String restaurant) {
+        firebaseFirestoreReference.collection(collectionPath).whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -316,9 +316,9 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getCollectionDocumentsCount(String collectionPath, final SimpleCallback<Integer> finishedCallback) {
+    public void getCollectionDocumentsCount(String collectionPath, final SimpleCallback<Integer> finishedCallback, final String restaurant) {
         final CollectionReference collectionReference = firebaseFirestoreReference.collection(collectionPath);
-        collectionReference.get().addOnCompleteListener(
+        collectionReference.whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

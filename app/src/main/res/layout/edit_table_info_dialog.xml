@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tableInfoDialog"
-    android:layout_width="wrap_content"
-    android:layout_height="400dp"
+    android:layout_width="175dp"
+    android:layout_height="150dp"
     android:background="@drawable/bkgr_animation"
     tools:context=".activities.EditTableInfoActivity">
 
@@ -35,36 +35,6 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTxtViewTable" />
 
     <TextView
-        android:id="@+id/textViewTableNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/table_number_label"
-        android:textColor="@color/whiteColor"
-        android:textSize="16sp"
-        app:fontFamily="@string/font_family_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <EditText
-        android:id="@+id/editTextTableNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/simple_edit_text"
-        android:hint="@string/menu_edit_text_quantity"
-        android:inputType="number"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/greyHintColor"
-        android:textSize="16sp"
-        app:fontFamily="@string/font_family_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        tools:ignore="Autofill" />
-
-    <TextView
         android:id="@+id/textViewTableNumberOfSeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +45,7 @@
         android:textSize="16sp"
         app:fontFamily="@string/font_family_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <EditText
         android:id="@+id/editTextTableNumberOfSeats"
@@ -93,12 +63,12 @@
         android:textSize="16sp"
         app:fontFamily="@string/font_family_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTableNumber"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/saveData"
-        android:layout_width="75dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="4dp"

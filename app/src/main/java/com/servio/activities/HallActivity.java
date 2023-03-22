@@ -42,6 +42,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -107,6 +108,7 @@ public class HallActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestoreReference;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
+    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +196,7 @@ public class HallActivity extends AppCompatActivity {
                     selectHallLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
-        });
+        }, restaurant);
     }
 
     private void initClickListeners() {
@@ -326,7 +328,7 @@ public class HallActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        });
+                        }, restaurant);
                     }
                 }
         );
@@ -442,7 +444,7 @@ public class HallActivity extends AppCompatActivity {
                 }
                 progressBar.setVisibility(View.GONE);
             }
-        });
+        }, restaurant);
     }
 
     private void setHallSize(String hallSize) {
@@ -537,6 +539,7 @@ public class HallActivity extends AppCompatActivity {
         hall.put("hallName", hallName);
         hall.put("hallSize", hallSizeSelection);
         hall.put("cellCollectionName", "Cells" + hallNameAux);
+        hall.put("restaurant", restaurant);
 
         firebaseDatabaseHelper.getCollectionDocumentsCount("Halls",
                 new SimpleCallback<Integer>() {
@@ -546,7 +549,7 @@ public class HallActivity extends AppCompatActivity {
                         firebaseDatabaseHelper.insertData("Halls", "hall" + hallNameAux, hall);
                         progressBar.setVisibility(View.GONE);
                     }
-                });
+                }, restaurant);
     }
 
     private void deleteConfiguration() {
@@ -587,7 +590,7 @@ public class HallActivity extends AppCompatActivity {
                     selectHallRadioGroup.clearCheck();
                 }
             }
-        });
+        }, restaurant);
 
         Toast.makeText(this, "Sala a fost stearsa cu succes", Toast.LENGTH_SHORT).show();
     }
@@ -893,9 +896,8 @@ public class HallActivity extends AppCompatActivity {
             }
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                tableNumber = data.getIntExtra("tableNumber", 0);
                 tableNumberOfSeats = data.getIntExtra("tableNumberOfSeats", 0);
-                updateTableInfo(tableNumber, tableNumberOfSeats);
+                updateTableInfo(tableNumberTemp, tableNumberOfSeats);
             }
         } else if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
