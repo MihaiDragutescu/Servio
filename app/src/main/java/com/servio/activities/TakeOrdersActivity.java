@@ -95,7 +95,7 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     private List<Dish> dishList;
-    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+    final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,21 +136,26 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
     }
 
     private void checkExistingHalls() {
-        firebaseDatabaseHelper.checkEmptyCollection("Halls", new SimpleCallback<Boolean>() {
+        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
             @Override
-            public void callback(Boolean check) {
-                if (check) {
-                    selectHallLinearLayout.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                    noHallsTextView.setVisibility(View.VISIBLE);
-                } else {
-                    progressBar.setVisibility(View.VISIBLE);
-                    noHallsTextView.setVisibility(View.INVISIBLE);
-                    addHallOptions();
-                    selectHallLinearLayout.setVisibility(View.VISIBLE);
-                }
+            public void callback(String restaurant) {
+                firebaseDatabaseHelper.checkEmptyCollection("Halls", new SimpleCallback<Boolean>() {
+                    @Override
+                    public void callback(Boolean check) {
+                        if (check) {
+                            selectHallLinearLayout.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            noHallsTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            progressBar.setVisibility(View.VISIBLE);
+                            noHallsTextView.setVisibility(View.INVISIBLE);
+                            addHallOptions();
+                            selectHallLinearLayout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }, restaurant);
             }
-        }, restaurant);
+        });
     }
 
     private void initClickListeners() {
@@ -196,29 +201,34 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
                     @Override
                     public void onClick(View v) {
                         progressBar.setVisibility(View.VISIBLE);
-                        firebaseDatabaseHelper.checkEmptyCollection("Halls", new SimpleCallback<Boolean>() {
+                        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
                             @Override
-                            public void callback(Boolean check) {
-                                if (check) {
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(TakeOrdersActivity.this, "Nu exista sali de afisat", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    if (selectHallLinearLayout.getVisibility() == View.INVISIBLE) {
-                                        hallNameTextView.setText("");
-                                        helpImageButton.setVisibility(View.VISIBLE);
-                                        deleteConfiguration();
-                                        activeOrdersConstraintLayout.setVisibility(View.GONE);
-                                        selectHallRadioGroup.removeAllViews();
-                                        addHallOptions();
-                                        selectHallLinearLayout.setVisibility(View.VISIBLE);
-                                        selectHallRadioGroup.clearCheck();
-                                    } else {
-                                        progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(TakeOrdersActivity.this, "Selectati sala de afisat din lista de mai sus", Toast.LENGTH_SHORT).show();
+                            public void callback(String restaurant) {
+                                firebaseDatabaseHelper.checkEmptyCollection("Halls", new SimpleCallback<Boolean>() {
+                                    @Override
+                                    public void callback(Boolean check) {
+                                        if (check) {
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(TakeOrdersActivity.this, "Nu exista sali de afisat", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            if (selectHallLinearLayout.getVisibility() == View.INVISIBLE) {
+                                                hallNameTextView.setText("");
+                                                helpImageButton.setVisibility(View.VISIBLE);
+                                                deleteConfiguration();
+                                                activeOrdersConstraintLayout.setVisibility(View.GONE);
+                                                selectHallRadioGroup.removeAllViews();
+                                                addHallOptions();
+                                                selectHallLinearLayout.setVisibility(View.VISIBLE);
+                                                selectHallRadioGroup.clearCheck();
+                                            } else {
+                                                progressBar.setVisibility(View.GONE);
+                                                Toast.makeText(TakeOrdersActivity.this, "Selectati sala de afisat din lista de mai sus", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
                                     }
-                                }
+                                }, restaurant);
                             }
-                        }, restaurant);
+                        });
                     }
                 }
         );
@@ -284,23 +294,28 @@ public class TakeOrdersActivity extends AppCompatActivity implements SimpleCallb
     }
 
     private void addHallOptions() {
-        firebaseDatabaseHelper.getDataFieldsValues("Halls", "hallName", new SimpleCallback<List<String>>() {
+        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
             @Override
-            public void callback(List<String> fieldsValues) {
-                for (int i = 0; i < fieldsValues.size(); i++) {
-                    RadioButton radioButton = new RadioButton(getApplicationContext());
-                    radioButton.setText(fieldsValues.get(i));
-                    radioButton.setTextColor(Color.WHITE);
-                    radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            public void callback(String restaurant) {
+                firebaseDatabaseHelper.getDataFieldsValues("Halls", "hallName", new SimpleCallback<List<String>>() {
+                    @Override
+                    public void callback(List<String> fieldsValues) {
+                        for (int i = 0; i < fieldsValues.size(); i++) {
+                            RadioButton radioButton = new RadioButton(getApplicationContext());
+                            radioButton.setText(fieldsValues.get(i));
+                            radioButton.setTextColor(Color.WHITE);
+                            radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
 
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 8, 0, 0);
-                    radioButton.setLayoutParams(params);
-                    selectHallRadioGroup.addView(radioButton);
-                }
-                progressBar.setVisibility(View.GONE);
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            params.setMargins(0, 8, 0, 0);
+                            radioButton.setLayoutParams(params);
+                            selectHallRadioGroup.addView(radioButton);
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }, restaurant);
             }
-        }, restaurant);
+        });
     }
 
     private void setHallSize(String hallSize) {
