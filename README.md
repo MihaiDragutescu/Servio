@@ -1,6 +1,6 @@
 # Servio
 
-Servio is an Android mobile application that aims to facilitate the process of taking and serving orders in a restaurant, to streamline the communication between the staff (waiters - chefs) and allow easier management of halls, employees and menu. The application differentiates between 3 types of users: administrator, waiter and chef. Each of them has access to a customized version of the application through which they can perform specific actions.
+Servio is an Android mobile app that aims to facilitate the process of taking and serving orders in a restaurant, to streamline the communication between the staff (waiters - chefs) and allow easier management of halls, employees and menu. The app differentiates between 3 types of users: administrator, waiter and chef. Each of them has access to a customized version of the app through which they can perform specific actions.
 
 Technologies used: Java, XML, Cloud Firestore.
 
@@ -37,7 +37,7 @@ To install and run the project on your Android device, you will need to have the
 
 [(Back to top)](#table-of-contents)
 
-The main features are split in three categories according to the role of the user that is using the application.
+The main features are split in three categories according to the role of the user that is using the app.
 
 #### Administrator version features:
 * Employees management.
@@ -57,3 +57,40 @@ The main features are split in three categories according to the role of the use
 ## Usage
 
 [(Back to top)](#table-of-contents)
+
+The app launches with the log in screen. You will first need to create a new account for your restaurant. After that you will be automatically logged in and redirected to the main menu for the administrator version of the app.
+
+<p float="middle">
+   <img src="https://user-images.githubusercontent.com/37268151/227045100-a0f1a0e9-1740-4f6d-9d3d-057820cb5b92.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227047446-56b798e2-2827-4a9e-b965-31a32bb99910.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227047460-7addbdb0-f157-4231-b182-7fb47d171992.png" width="33%" />
+</p>
+
+Now since you are logged in as the administrator you are allowed to manage your employees, restaurant menu and the restaurant rooms. To access the versions of the app for waiter or chef you need to create the profiles and reconnect to the app with the credentials that you set.
+
+A few screenshots from the administrator version of the app:
+
+<p float="middle">
+   <img src="https://user-images.githubusercontent.com/37268151/227050989-b457bb7a-adff-428b-9da6-f5b7ea21cfe2.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227051007-bc96cd58-c277-4a92-bf81-f639b4afb355.png" width="33%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227051016-10de3ffe-53b6-4c68-8195-563ca334dce1.png" width="33%" />
+</p>
+
+<p float="middle">
+   <img src="https://user-images.githubusercontent.com/37268151/227053624-455a388f-c3c9-4980-b8d8-43cd363e09c1.jpg" width="49.7%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227053660-0ceae8b1-501e-4a83-a167-083348f27326.jpg" width="49.7%" />
+</p>
+
+Screenshots from the waiter version of the app:
+
+<p float="middle">
+   <img src="https://user-images.githubusercontent.com/37268151/227056248-912bb398-713b-47c8-8d7f-6ec6d1635909.jpg" width="49.7%" />
+   <img src="https://user-images.githubusercontent.com/37268151/227056140-2e06aa3a-274a-4c6e-b492-0cd13a6112b1.jpg" width="49.7%" />
+</p>
+
+Screenshot from the chef version of the app:
+
+<p float="middle">
+   <img src="https://user-images.githubusercontent.com/37268151/227057327-c6ef27ef-3f01-4ce5-8142-10d6562b81c6.jpg" width="49.7%" />
+</p>
+
