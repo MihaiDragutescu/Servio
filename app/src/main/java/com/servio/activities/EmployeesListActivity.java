@@ -2,7 +2,6 @@ package com.servio.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,12 +12,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,6 +27,7 @@ import com.servio.models.Employee;
 import com.servio.recyclerviews.employee.EmployeeAdapter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Clasa corespunzatoare activitatii care afiseaza lista cu toti angajatii.
@@ -45,6 +45,8 @@ public class EmployeesListActivity extends AppCompatActivity {
     private Context context;
     private final FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private EmployeeAdapter employeeAdapter;
+
+    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,10 @@ public class EmployeesListActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         editTextSearchEmployee.setText("");
 
-                        Query query = firestoreReference.collection("Employees").orderBy("firstName", Query.Direction.ASCENDING);
+                        Query query = firestoreReference.collection("Employees")
+                                .whereEqualTo("restaurant", restaurant)
+                                .orderBy("firstName", Query.Direction.ASCENDING);
+
                         employeeAdapter.stopListening();
                         FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                                 .setQuery(query, Employee.class)
@@ -103,7 +108,9 @@ public class EmployeesListActivity extends AppCompatActivity {
 
                         if (!editTextSearchEmployee.getText().toString().matches("")) {
 
-                            final Query query = firestoreReference.collection("Employees").whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
+                            final Query query = firestoreReference.collection("Employees")
+                                    .whereEqualTo("restaurant", restaurant)
+                                    .whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
 
                             query.get().addOnSuccessListener(
                                     new OnSuccessListener<QuerySnapshot>() {
@@ -133,7 +140,9 @@ public class EmployeesListActivity extends AppCompatActivity {
                             );
 
                         } else if (editTextSearchEmployee.getText().toString().matches("")) {
-                            Query mainQuery = firestoreReference.collection("Employees").orderBy("firstName", Query.Direction.ASCENDING);
+                            Query mainQuery = firestoreReference.collection("Employees")
+                                    .whereEqualTo("restaurant", restaurant)
+                                    .orderBy("firstName", Query.Direction.ASCENDING);
                             employeeAdapter.stopListening();
                             FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                                     .setQuery(mainQuery, Employee.class)
@@ -162,7 +171,9 @@ public class EmployeesListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Query query = firestoreReference.collection("Employees").orderBy("lastName", Query.Direction.ASCENDING);
+        Query query = firestoreReference.collection("Employees")
+                .whereEqualTo("restaurant", restaurant)
+                .orderBy("lastName", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                 .setQuery(query, Employee.class)

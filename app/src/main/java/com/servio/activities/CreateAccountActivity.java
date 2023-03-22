@@ -102,7 +102,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 final Map<String, Object> restaurant = new HashMap<>();
                                 String id = "Id" + restaurantName.replaceAll("\\s+", "");
                                 restaurant.put("restaurantId", id);
-                                restaurant.put("restaurantIdName", restaurantName);
+                                restaurant.put("restaurantName", restaurantName);
 
                                 firebaseDatabaseHelper.insertData("Restaurants", id, restaurant);
 
