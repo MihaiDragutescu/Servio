@@ -127,9 +127,9 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void checkEmptyCollection(String collectionPath, final SimpleCallback<Boolean> finishedCallback) {
+    public void checkEmptyCollection(String collectionPath, final SimpleCallback<Boolean> finishedCallback, final String restaurant) {
         CollectionReference collectionReference = firebaseFirestoreReference.collection(collectionPath);
-        collectionReference.get().addOnCompleteListener(
+        collectionReference.whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -146,8 +146,8 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getDishesData(final SimpleCallback<List<Dish>> finishedCallback) {
-        firebaseFirestoreReference.collection("Dishes").get().addOnCompleteListener(
+    public void getDishesData(final SimpleCallback<List<Dish>> finishedCallback, final String restaurant) {
+        firebaseFirestoreReference.collection("Dishes").whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -186,6 +186,26 @@ public class FirebaseDatabaseHelper {
         );
     }
 
+    public void getOrdersDataByRestaurant(String fieldToFilter, String fieldToFilterValue, final SimpleCallback<List<Order>> finishedCallback, final String restaurant) {
+        firebaseFirestoreReference.collection("Orders").whereEqualTo(fieldToFilter, fieldToFilterValue).whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Order> list = new ArrayList<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Order order = document.toObject(Order.class);
+                                list.add(order);
+                            }
+                            finishedCallback.callback(list);
+                        } else {
+                            Toast.makeText(context, "Eroare", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+    }
+
     public <E> void getDocument(String collectionPath, String documentPath, final Class<E> className, final SimpleCallback<E> finishedCallback) {
         firebaseFirestoreReference.collection(collectionPath).document(documentPath).get().addOnCompleteListener(
                 new OnCompleteListener<DocumentSnapshot>() {
@@ -202,8 +222,8 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getDataFieldsValues(String collectionPath, final String field, final SimpleCallback<List<String>> finishedCallback) {
-        firebaseFirestoreReference.collection(collectionPath).get().addOnCompleteListener(
+    public void getDataFieldsValues(String collectionPath, final String field, final SimpleCallback<List<String>> finishedCallback, final String restaurant) {
+        firebaseFirestoreReference.collection(collectionPath).whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -316,9 +336,9 @@ public class FirebaseDatabaseHelper {
         );
     }
 
-    public void getCollectionDocumentsCount(String collectionPath, final SimpleCallback<Integer> finishedCallback) {
+    public void getCollectionDocumentsCount(String collectionPath, final SimpleCallback<Integer> finishedCallback, final String restaurant) {
         final CollectionReference collectionReference = firebaseFirestoreReference.collection(collectionPath);
-        collectionReference.get().addOnCompleteListener(
+        collectionReference.whereEqualTo("restaurant", restaurant).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

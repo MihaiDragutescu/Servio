@@ -85,6 +85,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchDishEditText" />
 
+    <TextView
+        android:id="@+id/noDishestextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:tag="noDishestextView"
+        android:text="@string/no_dishes_label"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        app:fontFamily="@string/font_family_1"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/searchDishEditText"
+        app:layout_constraintBottom_toTopOf="@+id/addDishBtnMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/addDishBtnMenu"
         android:layout_width="75dp"

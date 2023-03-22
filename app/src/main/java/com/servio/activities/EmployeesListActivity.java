@@ -2,7 +2,6 @@ package com.servio.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -10,24 +9,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.servio.R;
+import com.servio.helpers.FirebaseDatabaseHelper;
+import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Employee;
 import com.servio.recyclerviews.employee.EmployeeAdapter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Clasa corespunzatoare activitatii care afiseaza lista cu toti angajatii.
@@ -36,6 +39,7 @@ import java.util.Arrays;
 public class EmployeesListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView noEmployeesTextView;
     private Button addEmployeeBtn;
     private ImageButton backImageButton;
     private ImageButton refreshImageButton;
@@ -45,6 +49,9 @@ public class EmployeesListActivity extends AppCompatActivity {
     private Context context;
     private final FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private EmployeeAdapter employeeAdapter;
+    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+
+    private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +89,10 @@ public class EmployeesListActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         editTextSearchEmployee.setText("");
 
-                        Query query = firestoreReference.collection("Employees").orderBy("firstName", Query.Direction.ASCENDING);
+                        Query query = firestoreReference.collection("Employees")
+                                .whereEqualTo("restaurant", restaurant)
+                                .orderBy("firstName", Query.Direction.ASCENDING);
+
                         employeeAdapter.stopListening();
                         FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                                 .setQuery(query, Employee.class)
@@ -91,6 +101,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                         employeeAdapter = new EmployeeAdapter(options, context);
                         recyclerView.setAdapter(employeeAdapter);
                         employeeAdapter.startListening();
+                        checkEmptyList();
                     }
                 }
         );
@@ -103,7 +114,9 @@ public class EmployeesListActivity extends AppCompatActivity {
 
                         if (!editTextSearchEmployee.getText().toString().matches("")) {
 
-                            final Query query = firestoreReference.collection("Employees").whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
+                            final Query query = firestoreReference.collection("Employees")
+                                    .whereEqualTo("restaurant", restaurant)
+                                    .whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
 
                             query.get().addOnSuccessListener(
                                     new OnSuccessListener<QuerySnapshot>() {
@@ -125,6 +138,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                                                 employeeAdapter = new EmployeeAdapter(options, context);
                                                 recyclerView.setAdapter(employeeAdapter);
                                                 employeeAdapter.startListening();
+                                                checkEmptyList();
                                             } else {
                                                 Toast.makeText(EmployeesListActivity.this, "Nu s-a gasit angajatul", Toast.LENGTH_SHORT).show();
                                             }
@@ -133,7 +147,9 @@ public class EmployeesListActivity extends AppCompatActivity {
                             );
 
                         } else if (editTextSearchEmployee.getText().toString().matches("")) {
-                            Query mainQuery = firestoreReference.collection("Employees").orderBy("firstName", Query.Direction.ASCENDING);
+                            Query mainQuery = firestoreReference.collection("Employees")
+                                    .whereEqualTo("restaurant", restaurant)
+                                    .orderBy("firstName", Query.Direction.ASCENDING);
                             employeeAdapter.stopListening();
                             FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                                     .setQuery(mainQuery, Employee.class)
@@ -142,6 +158,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                             employeeAdapter = new EmployeeAdapter(options, context);
                             recyclerView.setAdapter(employeeAdapter);
                             employeeAdapter.startListening();
+                            checkEmptyList();
                         }
                     }
                 }
@@ -149,8 +166,12 @@ public class EmployeesListActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        FirebaseFirestore firebaseFirestoreReference = FirebaseFirestore.getInstance();
+        firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseFirestoreReference, EmployeesListActivity.this);
+
         recyclerView = findViewById(R.id.recyclerViewEmpList);
         addEmployeeBtn = findViewById(R.id.addEmployeeBtnEmpList);
+        noEmployeesTextView = findViewById(R.id.noEmployeestextView);
         backImageButton = findViewById(R.id.imageButtonBack);
         refreshImageButton = findViewById(R.id.imageButtonRefresh);
         editTextSearchEmployee = findViewById(R.id.searchEmployeeEditText);
@@ -158,11 +179,26 @@ public class EmployeesListActivity extends AppCompatActivity {
         imageButtonSearchEmployee = findViewById(R.id.imageButtonSearchEmployee);
     }
 
+    private void checkEmptyList() {
+        firebaseDatabaseHelper.getCollectionDocumentsCount("Employees", new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer count) {
+                if(count == 0) {
+                    noEmployeesTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noEmployeesTextView.setVisibility(View.GONE);
+                }
+            }
+        }, restaurant);
+    }
+
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Query query = firestoreReference.collection("Employees").orderBy("lastName", Query.Direction.ASCENDING);
+        Query query = firestoreReference.collection("Employees")
+                .whereEqualTo("restaurant", restaurant)
+                .orderBy("lastName", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Employee> options = new FirestoreRecyclerOptions.Builder<Employee>()
                 .setQuery(query, Employee.class)
@@ -172,6 +208,7 @@ public class EmployeesListActivity extends AppCompatActivity {
         context = this;
 
         recyclerView.setAdapter(employeeAdapter);
+        checkEmptyList();
     }
 
     @Override

@@ -13,7 +13,6 @@ public class SharedViewModel extends ViewModel {
 
     MutableLiveData<List<Dish>> dishList = new MutableLiveData<>();
 
-
     public void setText(CharSequence input) {
         text.setValue(input);
     }

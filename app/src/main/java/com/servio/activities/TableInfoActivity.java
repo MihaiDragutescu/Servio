@@ -48,8 +48,6 @@ public class TableInfoActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = 400;
-        params.height = 375;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

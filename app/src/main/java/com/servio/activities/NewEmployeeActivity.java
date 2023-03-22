@@ -56,7 +56,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private FirebaseFirestore firebaseReference;
-    private FirebaseAuth firebaseAuthSecondary;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +93,9 @@ public class NewEmployeeActivity extends AppCompatActivity {
 
         try {
             FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "RestaurantFabulos");
-            firebaseAuthSecondary = FirebaseAuth.getInstance(myApp);
+            firebaseAuth = FirebaseAuth.getInstance(myApp);
         } catch (IllegalStateException e) {
-            firebaseAuthSecondary = FirebaseAuth.getInstance(FirebaseApp.getInstance("RestaurantFabulos"));
+            firebaseAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("RestaurantFabulos"));
         }
     }
 
@@ -164,47 +164,56 @@ public class NewEmployeeActivity extends AppCompatActivity {
                         employee.put("salary", 0);
                         employee.put("type", job);
                         employee.put("email", email);
+                        employee.put("restaurant", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
+
 
                         progressBar.setVisibility(View.VISIBLE);
-                        firebaseAuthSecondary.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    FirebaseUser currentFirebaseUser = firebaseAuthSecondary.getCurrentUser();
-                                    employee.put("userID", currentFirebaseUser.getUid());
+                                    FirebaseUser currentFirebaseUser = firebaseAuth.getCurrentUser();
+                                    if (currentFirebaseUser != null) {
+                                        employee.put("userID", currentFirebaseUser.getUid());
+                                    }
 
                                     UserProfileChangeRequest profileRequest = new UserProfileChangeRequest.Builder().setDisplayName(lastName + " " + firstName).build();
 
-                                    currentFirebaseUser.updateProfile(profileRequest).addOnFailureListener(
-                                            new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(NewEmployeeActivity.this, "Eroare la actualizarea profilului utilizatorului.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                    );
-
-                                    firebaseReference.collection("Employees").document(currentFirebaseUser.getUid()).set(employee).addOnSuccessListener(
-                                            new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    progressBar.setVisibility(View.GONE);
-                                                    Toast.makeText(NewEmployeeActivity.this, "Angajatul a fost adaugat cu succes.", Toast.LENGTH_SHORT).show();
-                                                    firebaseAuthSecondary.signOut();
-
-                                                    finish();
-                                                    startActivity(new Intent(NewEmployeeActivity.this, EmployeesListActivity.class));
-                                                }
-                                            })
-                                            .addOnFailureListener(
-                                                    new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Toast.makeText(NewEmployeeActivity.this, "Eroare la adaugarea angajatului.", Toast.LENGTH_SHORT).show();
-                                                        }
+                                    if (currentFirebaseUser != null) {
+                                        currentFirebaseUser.updateProfile(profileRequest).addOnFailureListener(
+                                                new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(NewEmployeeActivity.this, "Eroare la actualizarea profilului utilizatorului.", Toast.LENGTH_SHORT).show();
                                                     }
-                                            );
+                                                }
+                                        );
+                                    }
+
+                                    if (currentFirebaseUser != null) {
+                                        firebaseReference.collection("Employees").document(currentFirebaseUser.getUid()).set(employee).addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        progressBar.setVisibility(View.GONE);
+                                                        Toast.makeText(NewEmployeeActivity.this, "Angajatul a fost adaugat cu succes.", Toast.LENGTH_SHORT).show();
+                                                        firebaseAuth.signOut();
+
+                                                        finish();
+                                                        startActivity(new Intent(NewEmployeeActivity.this, EmployeesListActivity.class));
+                                                    }
+                                                })
+                                                .addOnFailureListener(
+                                                        new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Toast.makeText(NewEmployeeActivity.this, "Eroare la adaugarea angajatului.", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                );
+                                    }
                                 } else {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(NewEmployeeActivity.this, "Eroare la adaugarea angajatului.", Toast.LENGTH_SHORT).show();

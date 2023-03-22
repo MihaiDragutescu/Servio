@@ -35,6 +35,7 @@ public class LogInActivity extends AppCompatActivity {
     private EditText passwordEditTxt;
     private Button logInButton;
     private Button exitButton;
+    private Button createAccountButton;
     private ProgressBar progressBar;
 
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
@@ -56,6 +57,7 @@ public class LogInActivity extends AppCompatActivity {
 
         logInButton = findViewById(R.id.loginButton);
         exitButton = findViewById(R.id.exitButton);
+        createAccountButton = findViewById(R.id.newAccountButton);
         emailEditTxt = findViewById(R.id.mailEditTxtLogIn);
         passwordEditTxt = findViewById(R.id.passwordEditTxt);
         progressBar = findViewById(R.id.progressBar);
@@ -129,6 +131,16 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         finishAffinity();
+                    }
+                }
+        );
+
+        createAccountButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                        startActivity(new Intent(LogInActivity.this, CreateAccountActivity.class));
                     }
                 }
         );

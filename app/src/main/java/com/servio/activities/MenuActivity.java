@@ -2,7 +2,6 @@ package com.servio.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -10,30 +9,35 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.servio.R;
+import com.servio.helpers.FirebaseDatabaseHelper;
+import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Dish;
 import com.servio.recyclerviews.dishAdmin.DishAdminAdapter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /* * Clasa activitatii in care va fi afisat meniul de preparate.*/
 
 public class MenuActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView noDishesTextView;
     private Button addDishBtn;
     private ImageButton backImageButton;
     private ImageButton refreshImageButton;
@@ -43,6 +47,9 @@ public class MenuActivity extends AppCompatActivity {
     Context context;
     FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private DishAdminAdapter dishAdminAdapter;
+    private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+
+    private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +78,9 @@ public class MenuActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         editTextSearchDish.setText("");
 
-                        Query query = firestoreReference.collection("Dishes").orderBy("dishCategory", Query.Direction.DESCENDING);
+                        Query query = firestoreReference.collection("Dishes")
+                                .whereEqualTo("restaurant", restaurant)
+                                .orderBy("dishCategory", Query.Direction.DESCENDING);
                         dishAdminAdapter.stopListening();
                         FirestoreRecyclerOptions<Dish> options = new FirestoreRecyclerOptions.Builder<Dish>()
                                 .setQuery(query, Dish.class)
@@ -80,6 +89,7 @@ public class MenuActivity extends AppCompatActivity {
                         dishAdminAdapter = new DishAdminAdapter(options, context);
                         recyclerView.setAdapter(dishAdminAdapter);
                         dishAdminAdapter.startListening();
+                        checkEmptyList();
                     }
                 }
         );
@@ -100,7 +110,9 @@ public class MenuActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String[] keyWords = editTextSearchDish.getText().toString().toLowerCase().split("\\s+");
 
-                        final Query query = firestoreReference.collection("Dishes").whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
+                        final Query query = firestoreReference.collection("Dishes")
+                                .whereEqualTo("restaurant", restaurant)
+                                .whereArrayContainsAny("keyWords", Arrays.asList(keyWords));
 
                         if (!editTextSearchDish.getText().toString().matches("")) {
                             query.get().addOnSuccessListener(
@@ -123,6 +135,7 @@ public class MenuActivity extends AppCompatActivity {
                                                 dishAdminAdapter = new DishAdminAdapter(options, context);
                                                 recyclerView.setAdapter(dishAdminAdapter);
                                                 dishAdminAdapter.startListening();
+                                                checkEmptyList();
                                             } else {
                                                 Toast.makeText(MenuActivity.this, "Nu s-a gasit produsul", Toast.LENGTH_SHORT).show();
                                             }
@@ -131,7 +144,9 @@ public class MenuActivity extends AppCompatActivity {
                             );
 
                         } else if (editTextSearchDish.getText().toString().matches("")) {
-                            Query mainQuery = firestoreReference.collection("Dishes").orderBy("dishCategory", Query.Direction.DESCENDING);
+                            Query mainQuery = firestoreReference.collection("Dishes")
+                                    .whereEqualTo("restaurant", restaurant)
+                                    .orderBy("dishCategory", Query.Direction.DESCENDING);
                             dishAdminAdapter.stopListening();
                             FirestoreRecyclerOptions<Dish> options = new FirestoreRecyclerOptions.Builder<Dish>()
                                     .setQuery(mainQuery, Dish.class)
@@ -140,6 +155,7 @@ public class MenuActivity extends AppCompatActivity {
                             dishAdminAdapter = new DishAdminAdapter(options, context);
                             recyclerView.setAdapter(dishAdminAdapter);
                             dishAdminAdapter.startListening();
+                            checkEmptyList();
                         }
                     }
                 }
@@ -147,7 +163,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        FirebaseFirestore firebaseFirestoreReference = FirebaseFirestore.getInstance();
+        firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseFirestoreReference, MenuActivity.this);
+
         recyclerView = findViewById(R.id.recyclerViewMenu);
+        noDishesTextView = findViewById(R.id.noDishestextView);
         addDishBtn = findViewById(R.id.addDishBtnMenu);
         backImageButton = findViewById(R.id.imageButtonBack);
         refreshImageButton = findViewById(R.id.imageButtonRefresh);
@@ -156,11 +176,26 @@ public class MenuActivity extends AppCompatActivity {
         imageButtonSearchDish = findViewById(R.id.imageButtonSearchDish);
     }
 
+    private void checkEmptyList() {
+        firebaseDatabaseHelper.getCollectionDocumentsCount("Dishes", new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer count) {
+                if(count == 0) {
+                    noDishesTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noDishesTextView.setVisibility(View.GONE);
+                }
+            }
+        }, restaurant);
+    }
+
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Query query = firestoreReference.collection("Dishes").orderBy("dishCategory", Query.Direction.DESCENDING);
+        Query query = firestoreReference.collection("Dishes")
+                .whereEqualTo("restaurant", restaurant)
+                .orderBy("dishCategory", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Dish> options = new FirestoreRecyclerOptions.Builder<Dish>()
                 .setQuery(query, Dish.class)
@@ -170,6 +205,7 @@ public class MenuActivity extends AppCompatActivity {
         context = this;
 
         recyclerView.setAdapter(dishAdminAdapter);
+        checkEmptyList();
     }
 
     @Override

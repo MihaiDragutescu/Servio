@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.servio.R;
 import com.servio.helpers.FirebaseDatabaseHelper;
@@ -106,6 +107,7 @@ public class NewDishActivity extends AppCompatActivity {
                             dish.put("dishQuantity", quantity);
                             dish.put("dishId", id);
                             dish.put("dishCategory", category);
+                            dish.put("restaurant", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
                             ArrayList<String> keyWordsList = new ArrayList<>(Arrays.asList(keyWords));
 

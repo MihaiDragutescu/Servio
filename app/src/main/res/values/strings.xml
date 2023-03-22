@@ -2,6 +2,7 @@
     <string name="app_name">Servio</string>
     <string name="log_in_activity_title">Autentificare</string>
     <string name="log_in_button_text">Autentifică</string>
+    <string name="create_account_text">Creează cont</string>
     <string name="close_button_text">Închide</string>
     <string name="log_out_button_text">Deconectare</string>
     <string name="employee_managrmrnt_button_text">Angajați</string>
@@ -11,6 +12,7 @@
     <string name="profile_button_text">Profil</string>
     <string name="user_name_label">Username</string>
     <string name="password_label">Parolă:</string>
+    <string name="password_label_confirm">Confirmare parolă:</string>
     <string name="hire_date_label">Data angajării:</string>
     <string name="hire_date_hint">YYYY-MM-DD</string>
     <string name="salary_label">Salariu:</string>
@@ -24,7 +26,9 @@
     <string name="username_hint">Ionescu Elena</string>
     <string name="username_text">Username</string>
     <string name="email_label">Email:</string>
+    <string name="restaurant_label">Nume restaurant:</string>
     <string name="email_hint">utilizator@exemplu.com</string>
+    <string name="restaurant_hint">Restaurant</string>
     <string name="job_label">Job:</string>
     <string name="phone_number_label">Phone Number</string>
     <string name="phone_number_hint">0712345678</string>
@@ -34,6 +38,8 @@
     <string name="delete_hall_button_text">Șterge sala</string>
     <string name="swap_hall_button_text">Schimbă sala</string>
     <string name="no_hall_label">Nu există săli de afișat. Pentru a adăuga o sală apasați butonul din meniul din partea de jos.</string>
+    <string name="no_employees_label">Nu există angajați de afișat.</string>
+    <string name="no_dishes_label">Nu există preparate de afișat.</string>
     <string name="select_hall_label">Selectați sala de afișat:</string>
     <string name="confirm_button_text">Confirmă</string>
     <string name="save_data_button_text">Salvează date</string>
@@ -78,7 +84,7 @@
     <string name="order_name_label">Nume comandă:</string>
     <string name="hall_name_label">Sala:</string>
     <string name="waiter_name_label">Ospătar:</string>
-    <string name="order_time_label">Oră comandă:</string>
+    <string name="order_time_label">Oră:</string>
     <string name="ordered_dishes_label">Preparate:</string>
     <string name="postpone_button_text">Amână</string>
     <string name="prepare_button_text">Prepară</string>
