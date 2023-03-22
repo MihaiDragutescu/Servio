@@ -38,6 +38,8 @@
     <string name="delete_hall_button_text">Șterge sala</string>
     <string name="swap_hall_button_text">Schimbă sala</string>
     <string name="no_hall_label">Nu există săli de afișat. Pentru a adăuga o sală apasați butonul din meniul din partea de jos.</string>
+    <string name="no_employees_label">Nu există angajați de afișat.</string>
+    <string name="no_dishes_label">Nu există preparate de afișat.</string>
     <string name="select_hall_label">Selectați sala de afișat:</string>
     <string name="confirm_button_text">Confirmă</string>
     <string name="save_data_button_text">Salvează date</string>

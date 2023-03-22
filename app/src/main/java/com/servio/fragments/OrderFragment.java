@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.servio.R;
 import com.servio.activities.TakeOrdersActivity;
 import com.servio.helpers.FirebaseDatabaseHelper;
+import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Dish;
 import com.servio.recyclerviews.dishOrder.DishOrderAdapter;
 
@@ -49,6 +50,7 @@ public class OrderFragment extends Fragment {
     DishOrderAdapter dishOrderAdapter;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
     SharedViewModel viewModel;
+    final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     private void setLayoutManager() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -155,43 +157,53 @@ public class OrderFragment extends Fragment {
                                                 alertDialog.setPositiveButton("Da", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        String hallNameAux = hallName.replaceAll("\\s+", "");
-                                                        final Map<String, Object> orderMap = new HashMap<>();
 
-                                                        String orderId = hallNameAux + "Masa" + tableNumber;
-                                                        orderMap.put("orderId", orderId);
 
-                                                        orderMap.put("orderedDishes", list);
 
-                                                        Calendar calendar = Calendar.getInstance();
-                                                        @SuppressLint("SimpleDateFormat")
-                                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                                                        String formattedDate = simpleDateFormat.format(calendar.getTime());
-                                                        orderMap.put("orderTime", formattedDate);
+                                                        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
+                                                            @Override
+                                                            public void callback(String restaurant) {
+                                                                String hallNameAux = hallName.replaceAll("\\s+", "");
+                                                                final Map<String, Object> orderMap = new HashMap<>();
 
-                                                        orderMap.put("orderName", "Comanda masa nr. " + tableNumber);
+                                                                String orderId = hallNameAux + "Masa" + tableNumber;
+                                                                orderMap.put("orderId", orderId);
 
-                                                        orderMap.put("hallName", hallName);
+                                                                orderMap.put("orderedDishes", list);
 
-                                                        orderMap.put("tableNumber", tableNumber);
+                                                                Calendar calendar = Calendar.getInstance();
+                                                                @SuppressLint("SimpleDateFormat")
+                                                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                                                String formattedDate = simpleDateFormat.format(calendar.getTime());
+                                                                orderMap.put("orderTime", formattedDate);
 
-                                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                                        orderMap.put("waiterName", user.getDisplayName());
+                                                                orderMap.put("orderName", "Comanda masa nr. " + tableNumber);
 
-                                                        orderMap.put("orderPrice", finalSum);
+                                                                orderMap.put("hallName", hallName);
 
-                                                        orderMap.put("orderStatus", "waiting");
+                                                                orderMap.put("tableNumber", tableNumber);
 
-                                                        firebaseDatabaseHelper.insertData("Orders", orderId, orderMap);
-                                                        firebaseDatabaseHelper.simpleUpdateField("Tables", hallNameAux + tableNumber, "tableAvailability", false);
+                                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                                orderMap.put("waiterName", user.getDisplayName());
 
-                                                        ((TakeOrdersActivity) getActivity()).saveOrder();
-                                                        dishList = new ArrayList<>();
-                                                        viewModel.setDishList(dishList);
-                                                        setLayoutManager();
-                                                        setAdapter(dishList);
+                                                                orderMap.put("orderPrice", finalSum);
 
-                                                        Toast.makeText(getActivity(), "Comanda a fost finalizată", Toast.LENGTH_SHORT).show();
+                                                                orderMap.put("orderStatus", "waiting");
+                                                                orderMap.put("restaurant", restaurant);
+
+                                                                firebaseDatabaseHelper.insertData("Orders", orderId, orderMap);
+                                                                firebaseDatabaseHelper.simpleUpdateField("Tables", hallNameAux + tableNumber, "tableAvailability", false);
+
+                                                                ((TakeOrdersActivity) getActivity()).saveOrder();
+                                                                dishList = new ArrayList<>();
+                                                                viewModel.setDishList(dishList);
+                                                                setLayoutManager();
+                                                                setAdapter(dishList);
+
+                                                                Toast.makeText(getActivity(), "Comanda a fost finalizată", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+
                                                     }
                                                 });
 

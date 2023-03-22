@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.servio.R;
+import com.servio.helpers.FirebaseDatabaseHelper;
+import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Employee;
 import com.servio.recyclerviews.employee.EmployeeAdapter;
 
@@ -36,6 +39,7 @@ import java.util.Objects;
 public class EmployeesListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView noEmployeesTextView;
     private Button addEmployeeBtn;
     private ImageButton backImageButton;
     private ImageButton refreshImageButton;
@@ -46,6 +50,8 @@ public class EmployeesListActivity extends AppCompatActivity {
     private final FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
     private EmployeeAdapter employeeAdapter;
     private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+
+    private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +101,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                         employeeAdapter = new EmployeeAdapter(options, context);
                         recyclerView.setAdapter(employeeAdapter);
                         employeeAdapter.startListening();
+                        checkEmptyList();
                     }
                 }
         );
@@ -131,6 +138,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                                                 employeeAdapter = new EmployeeAdapter(options, context);
                                                 recyclerView.setAdapter(employeeAdapter);
                                                 employeeAdapter.startListening();
+                                                checkEmptyList();
                                             } else {
                                                 Toast.makeText(EmployeesListActivity.this, "Nu s-a gasit angajatul", Toast.LENGTH_SHORT).show();
                                             }
@@ -150,6 +158,7 @@ public class EmployeesListActivity extends AppCompatActivity {
                             employeeAdapter = new EmployeeAdapter(options, context);
                             recyclerView.setAdapter(employeeAdapter);
                             employeeAdapter.startListening();
+                            checkEmptyList();
                         }
                     }
                 }
@@ -157,13 +166,31 @@ public class EmployeesListActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        FirebaseFirestore firebaseFirestoreReference = FirebaseFirestore.getInstance();
+        firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseFirestoreReference, EmployeesListActivity.this);
+
         recyclerView = findViewById(R.id.recyclerViewEmpList);
         addEmployeeBtn = findViewById(R.id.addEmployeeBtnEmpList);
+        noEmployeesTextView = findViewById(R.id.noEmployeestextView);
         backImageButton = findViewById(R.id.imageButtonBack);
         refreshImageButton = findViewById(R.id.imageButtonRefresh);
         editTextSearchEmployee = findViewById(R.id.searchEmployeeEditText);
         editTextSearchEmployee.setImeOptions(EditorInfo.IME_ACTION_DONE);
         imageButtonSearchEmployee = findViewById(R.id.imageButtonSearchEmployee);
+    }
+
+    private void checkEmptyList() {
+
+        firebaseDatabaseHelper.getCollectionDocumentsCount("Employees", new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer count) {
+                if(count == 0) {
+                    noEmployeesTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noEmployeesTextView.setVisibility(View.GONE);
+                }
+            }
+        }, restaurant);
     }
 
     private void setLayoutManager() {
@@ -182,6 +209,7 @@ public class EmployeesListActivity extends AppCompatActivity {
         context = this;
 
         recyclerView.setAdapter(employeeAdapter);
+        checkEmptyList();
     }
 
     @Override

@@ -31,6 +31,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,6 +61,7 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
 
     private FirebaseFirestore firebaseFirestoreReference;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
+    final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,28 +111,40 @@ public class PrepareOrdersActivity extends AppCompatActivity implements View.OnT
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(PrepareOrdersActivity.this);
         waitingOrdersRecyclerView.setLayoutManager(layoutManager);
 
-        firebaseDatabaseHelper.getOrdersData("orderStatus", "waiting",
-                new SimpleCallback<List<Order>>() {
-                    @Override
-                    public void callback(List<Order> waitingOrders) {
-                        WaitingOrdersAdapter waitingOrdersAdapter = new WaitingOrdersAdapter(waitingOrders, PrepareOrdersActivity.this);
-                        waitingOrdersRecyclerView.setAdapter(waitingOrdersAdapter);
-                    }
-                });
+        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
+            @Override
+            public void callback(String restaurant) {
+                firebaseDatabaseHelper.getOrdersDataByRestaurant("orderStatus", "waiting",
+                        new SimpleCallback<List<Order>>() {
+                            @Override
+                            public void callback(List<Order> waitingOrders) {
+                                WaitingOrdersAdapter waitingOrdersAdapter = new WaitingOrdersAdapter(waitingOrders, PrepareOrdersActivity.this);
+                                waitingOrdersRecyclerView.setAdapter(waitingOrdersAdapter);
+                            }
+                        }, restaurant);
+            }
+        });
     }
 
     private void initPreparingOrdersRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(PrepareOrdersActivity.this);
         preparingOrdersRecyclerView.setLayoutManager(layoutManager);
 
-        firebaseDatabaseHelper.getOrdersData("orderStatus", "preparing",
-                new SimpleCallback<List<Order>>() {
-                    @Override
-                    public void callback(List<Order> preparingOrders) {
-                        PreparingOrdersAdapter preparingOrdersAdapter = new PreparingOrdersAdapter(preparingOrders, PrepareOrdersActivity.this);
-                        preparingOrdersRecyclerView.setAdapter(preparingOrdersAdapter);
-                    }
-                });
+        firebaseDatabaseHelper.getSingleDataFieldValue("Employees", currentUserId, "restaurant", new SimpleCallback<String>() {
+            @Override
+            public void callback(String restaurant) {
+                firebaseDatabaseHelper.getOrdersDataByRestaurant("orderStatus", "preparing",
+                        new SimpleCallback<List<Order>>() {
+                            @Override
+                            public void callback(List<Order> preparingOrders) {
+                                PreparingOrdersAdapter preparingOrdersAdapter = new PreparingOrdersAdapter(preparingOrders, PrepareOrdersActivity.this);
+                                preparingOrdersRecyclerView.setAdapter(preparingOrdersAdapter);
+                            }
+                        }, restaurant);
+            }
+        });
+
+
     }
 
     public void onWindowFocusChanged(boolean hasFocus) {
