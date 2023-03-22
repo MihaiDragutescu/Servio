@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.servio.R;
+import com.servio.helpers.FirebaseDatabaseHelper;
+import com.servio.interfaces.SimpleCallback;
 import com.servio.models.Dish;
 import com.servio.recyclerviews.dishAdmin.DishAdminAdapter;
 
@@ -34,6 +37,7 @@ import java.util.Objects;
 public class MenuActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView noDishesTextView;
     private Button addDishBtn;
     private ImageButton backImageButton;
     private ImageButton refreshImageButton;
@@ -45,6 +49,7 @@ public class MenuActivity extends AppCompatActivity {
     private DishAdminAdapter dishAdminAdapter;
     private final String restaurant = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
 
+    private FirebaseDatabaseHelper firebaseDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +89,7 @@ public class MenuActivity extends AppCompatActivity {
                         dishAdminAdapter = new DishAdminAdapter(options, context);
                         recyclerView.setAdapter(dishAdminAdapter);
                         dishAdminAdapter.startListening();
+                        checkEmptyList();
                     }
                 }
         );
@@ -129,6 +135,7 @@ public class MenuActivity extends AppCompatActivity {
                                                 dishAdminAdapter = new DishAdminAdapter(options, context);
                                                 recyclerView.setAdapter(dishAdminAdapter);
                                                 dishAdminAdapter.startListening();
+                                                checkEmptyList();
                                             } else {
                                                 Toast.makeText(MenuActivity.this, "Nu s-a gasit produsul", Toast.LENGTH_SHORT).show();
                                             }
@@ -148,6 +155,7 @@ public class MenuActivity extends AppCompatActivity {
                             dishAdminAdapter = new DishAdminAdapter(options, context);
                             recyclerView.setAdapter(dishAdminAdapter);
                             dishAdminAdapter.startListening();
+                            checkEmptyList();
                         }
                     }
                 }
@@ -155,13 +163,30 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        FirebaseFirestore firebaseFirestoreReference = FirebaseFirestore.getInstance();
+        firebaseDatabaseHelper = new FirebaseDatabaseHelper(firebaseFirestoreReference, MenuActivity.this);
+
         recyclerView = findViewById(R.id.recyclerViewMenu);
+        noDishesTextView = findViewById(R.id.noDishestextView);
         addDishBtn = findViewById(R.id.addDishBtnMenu);
         backImageButton = findViewById(R.id.imageButtonBack);
         refreshImageButton = findViewById(R.id.imageButtonRefresh);
         editTextSearchDish = findViewById(R.id.searchDishEditText);
         editTextSearchDish.setImeOptions(EditorInfo.IME_ACTION_DONE);
         imageButtonSearchDish = findViewById(R.id.imageButtonSearchDish);
+    }
+
+    private void checkEmptyList() {
+        firebaseDatabaseHelper.getCollectionDocumentsCount("Dishes", new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer count) {
+                if(count == 0) {
+                    noDishesTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noDishesTextView.setVisibility(View.GONE);
+                }
+            }
+        }, restaurant);
     }
 
     private void setLayoutManager() {
@@ -180,6 +205,7 @@ public class MenuActivity extends AppCompatActivity {
         context = this;
 
         recyclerView.setAdapter(dishAdminAdapter);
+        checkEmptyList();
     }
 
     @Override

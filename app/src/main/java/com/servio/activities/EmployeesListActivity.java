@@ -180,7 +180,6 @@ public class EmployeesListActivity extends AppCompatActivity {
     }
 
     private void checkEmptyList() {
-
         firebaseDatabaseHelper.getCollectionDocumentsCount("Employees", new SimpleCallback<Integer>() {
             @Override
             public void callback(Integer count) {
