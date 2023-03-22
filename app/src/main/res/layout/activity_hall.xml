@@ -70,9 +70,10 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
+            app:layout_constraintVertical_weight="0.75"
             android:background="@drawable/custom_border"
             app:columnCount="2"
-            app:layout_constraintBottom_toTopOf="@+id/addHallButton"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsConstraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottomBorderHall"
@@ -145,56 +146,61 @@
 
         </androidx.gridlayout.widget.GridLayout>
 
-        <Button
-            android:id="@+id/addHallButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_button_hall"
-            android:minWidth="8dp"
-            android:minHeight="24dp"
-            android:text="@string/add_hall_button_text"
-            android:textColor="@color/whiteColor"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/deleteHallButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/deleteHallButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_button_hall"
-            android:minWidth="8dp"
-            android:minHeight="24dp"
-            android:text="@string/delete_hall_button_text"
-            android:textColor="@color/whiteColor"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/swapHallButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/swapHallButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_button_hall"
-            android:minWidth="8dp"
-            android:minHeight="24dp"
-            android:text="@string/swap_hall_button_text"
-            android:textColor="@color/whiteColor"
-            android:textSize="12sp"
+        <LinearLayout
+            android:id="@+id/buttonsConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintVertical_weight="0.25"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayoutElements">
+
+            <Button
+                android:id="@+id/addHallButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_button_hall"
+                android:minWidth="8dp"
+                android:minHeight="24dp"
+                android:text="@string/add_hall_button_text"
+                android:textColor="@color/whiteColor"
+                android:textSize="12sp"
+                />
+
+            <Button
+                android:id="@+id/deleteHallButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_button_hall"
+                android:minWidth="8dp"
+                android:minHeight="24dp"
+                android:text="@string/delete_hall_button_text"
+                android:textColor="@color/whiteColor"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/swapHallButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_button_hall"
+                android:minWidth="8dp"
+                android:minHeight="24dp"
+                android:text="@string/swap_hall_button_text"
+                android:textColor="@color/whiteColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

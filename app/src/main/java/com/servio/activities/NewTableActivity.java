@@ -60,8 +60,8 @@ public class NewTableActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = 550;
-        params.height = 550;
+//        params.width = 550;
+//        params.height = 550;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

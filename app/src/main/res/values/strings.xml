@@ -84,7 +84,7 @@
     <string name="order_name_label">Nume comandă:</string>
     <string name="hall_name_label">Sala:</string>
     <string name="waiter_name_label">Ospătar:</string>
-    <string name="order_time_label">Oră comandă:</string>
+    <string name="order_time_label">Oră:</string>
     <string name="ordered_dishes_label">Preparate:</string>
     <string name="postpone_button_text">Amână</string>
     <string name="prepare_button_text">Prepară</string>

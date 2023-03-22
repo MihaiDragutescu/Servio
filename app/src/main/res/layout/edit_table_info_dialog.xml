@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tableInfoDialog"
-    android:layout_width="175dp"
-    android:layout_height="150dp"
+    android:layout_width="225dp"
+    android:layout_height="140dp"
     android:background="@drawable/bkgr_animation"
     tools:context=".activities.EditTableInfoActivity">
 
@@ -68,7 +68,7 @@
 
     <Button
         android:id="@+id/saveData"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="4dp"
