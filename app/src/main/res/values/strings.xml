@@ -88,7 +88,7 @@
     <string name="ordered_dishes_label">Preparate:</string>
     <string name="postpone_button_text">Amână</string>
     <string name="prepare_button_text">Prepară</string>
-    <string name="finish_button_text">Finalizează</string>
+    <string name="finish_button_text">Termină</string>
 
     <string-array name="employee_types">
         <item> Chef </item>
